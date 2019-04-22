@@ -8,6 +8,28 @@
         <result column="EnableSign" property="enableSign" jdbcType="INTEGER"/>
     </resultMap>
 
+    <resultMap id="SystemPageMap" type="com.lh.authority.dto.MyPage">
+        <id column="systemName" property="systemName" jdbcType="VARCHAR"/>
+        <result column="picPath" property="picPath" jdbcType="VARCHAR"/>
+        <result column="helloPage" property="helloPage" jdbcType="VARCHAR"/>
+        <association property="operator" column="id" javaType="com.lh.authority.model.Operator">
+            <id column="operatorId" property="operatorId" jdbcType="VARCHAR"/>
+            <result column="operName" property="operName" jdbcType="VARCHAR"/>
+            <result column="departId" property="departId" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="groups" ofType="com.lh.authority.model.Group">
+            <id column="groupName" property="groupName" jdbcType="VARCHAR"/>
+            <result column="expandSign" property="expandSign" jdbcType="BOOLEAN"/>
+            <collection property="pageItems" ofType="com.lh.authority.model.PageItem">
+                <id column="url" property="url" jdbcType="VARCHAR"/>
+                <result column="caption" property="caption" jdbcType="VARCHAR"/>
+                <result column="formPic" property="formPic" jdbcType="VARCHAR"/>
+                <result column="formRemark" property="formRemark" jdbcType="VARCHAR"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+
     <!--得到指定用户子系统权限列表-->
     <select id="selectMySystemNameList" resultMap="SystemMap" parameterType="com.lh.authority.model.MySystemPara">
         SELECT sn.systemName,sn.picPath,sn.remark
@@ -27,5 +49,37 @@
         GROUP BY sn.systemname,sn.hellowWebName,sn.picPath
         ORDER BY sn.sortNo
     </select>
+
+    <!--得到指定用户指定子系统页面权限列表-->
+    <select id="selectMyPageAuthorityList" resultMap="SystemPageMap" parameterType="com.lh.authority.model.MySystemParaAll">
+        SELECT
+sn.systemName
+,Case WHEN sn.hellowWebName is not null  AND LENGTH(ap.paraStr) > 0 then sn.hellowWebName else 'Default.html' end helloPage
+,sn.picPath
+,oper.name as operName,oper.departId
+,gn.groupName,gn.isExpand as expandSign
+,ap.caption
+,case WHEN ap.paraStr is not null AND LENGTH(ap.paraStr) > 0 then
+	CONCAT(ap.formPath,'/',ap.formName,ap.paraStr)
+else
+	CONCAT(ap.formPath,'/',ap.formName) end
+as url
+,ap.picPath as formPic
+,ap.remark as formRemark
+FROM sys_operator as oper
+INNER JOIN sys_operatorlinkrole as oplr on oper.id = oplr.operatorId
+INNER JOIN sys_rolelinkpower as rlp on oplr.roleId = rlp.roleId
+INNER JOIN sys_grouplinkpower as glp on rlp.allPowerId = glp.formAllPowerID
+INNER JOIN sys_groupname as gn on gn.id = glp.groupid
+INNER JOIN sys_systemname as sn on sn.systemname = gn.systemname
+INNER JOIN sys_allpower as ap on ap.id = rlp.allPowerId
+        WHERE oper.id = #{id,jdbcType=VARCHAR}
+        AND ap.stopSign = #{stopSign,jdbcType=VARCHAR}
+        AND ap.powerType = #{powerType,jdbcType=VARCHAR}
+        AND ap.formType = #{formType,jdbcType=VARCHAR}
+        AND sn.systemName = #{systemName,jdbcType=VARCHAR}
+        ORDER BY gn.sortNo,glp.sortNo
+    </select>
+
 </mapper>
 

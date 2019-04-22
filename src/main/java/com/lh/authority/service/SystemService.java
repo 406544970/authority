@@ -1,8 +1,10 @@
 package com.lh.authority.service;
 
 
+import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.MySystem;
 import com.lh.authority.model.MySystemPara;
+import com.lh.authority.model.MySystemParaAll;
 
 import java.util.List;
 
@@ -20,4 +22,6 @@ public interface SystemService {
      * @return 子系统权限列表
      */
     List<MySystem> selectMySystemNameList(MySystemPara mySystemPara);
+
+    List<MyPage> selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
 }
