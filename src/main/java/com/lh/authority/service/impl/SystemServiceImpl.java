@@ -42,8 +42,7 @@ public class SystemServiceImpl implements SystemService {
      * @return 子系统页面权限列表
      */
     @Override
-    public List<MyPage> selectMyPageAuthorityList(MySystemParaAll mySystemParaAll) {
-        List<MyPage> myPages = systemMapper.selectMyPageAuthorityList(mySystemParaAll);
-        return myPages;
+    public MyPage selectMyPageAuthorityList(MySystemParaAll mySystemParaAll) {
+        return systemMapper.selectMyPageAuthorityList(mySystemParaAll);
     }
 }

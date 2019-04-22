@@ -18,5 +18,5 @@ import java.util.List;
 public interface SystemMapper {
     List<MySystem> selectMySystemNameList(MySystemPara mySystemPara);
 
-    List<MyPage> selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
+    MyPage selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
 }

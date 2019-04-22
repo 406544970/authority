@@ -83,12 +83,11 @@ public class MyAuthorityController {
             , @ApiImplicitParam(name = "systemName", value = " 子系统名称", required = true, dataType = "String")
     })
     @PostMapping("/selectMyPageAuthorityList")
-    public List<MyPage> selectMyPageAuthorityList(@RequestParam(value = "id") String id
+    public MyPage selectMyPageAuthorityList(@RequestParam(value = "id") String id
             , @RequestParam(value = "systemName") String systemName) {
         MySystemParaAll mySystemParaAll = new MySystemParaAll();
         mySystemParaAll.setId(id);
         mySystemParaAll.setSystemName(systemName);
-        List<MyPage> myPages = systemService.selectMyPageAuthorityList(mySystemParaAll);
-        return myPages;
+        return systemService.selectMyPageAuthorityList(mySystemParaAll);
     }
 }

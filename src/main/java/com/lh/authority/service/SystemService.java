@@ -23,5 +23,5 @@ public interface SystemService {
      */
     List<MySystem> selectMySystemNameList(MySystemPara mySystemPara);
 
-    List<MyPage> selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
+    MyPage selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
 }
