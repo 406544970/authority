@@ -3,7 +3,6 @@ package com.lh.authority.controller;
 import com.lh.authority.model.MySystem;
 import com.lh.authority.model.MySystemPara;
 import com.lh.authority.service.SystemService;
-import com.lh.authority.service.impl.SystemServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,7 +23,6 @@ import java.util.List;
  * @function
  * @editLog
  */
-@SpringBootApplication
 @EnableEurekaClient
 @RestController
 @RequestMapping(value = "/authority")
@@ -48,5 +46,26 @@ public class MyAuthorityController {
         MySystemPara mySystemPara = new MySystemPara();
         mySystemPara.setId(id);
         return systemService.selectMySystemNameList(mySystemPara);
+    }
+
+    /**
+     * 得到指定用户有没有子系统权限
+     *
+     * @param id 用户ID
+     * @return false:无权限，否则，有；
+     */
+    @ApiOperation(value = "得到指定用户有没有子系统权限", notes = "false:无权限，否则，有；")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = " 用户ID", required = true, dataType = "String")
+    })
+    @PostMapping("/selectMySystemHave")
+    public boolean selectMySystemHave(@RequestParam(value = "id") String id) {
+        MySystemPara mySystemPara = new MySystemPara();
+        mySystemPara.setId(id);
+        List<MySystem> mySystems = systemService.selectMySystemNameList(mySystemPara);
+        if (mySystems != null) {
+            return mySystems.isEmpty() ? false : true;
+        } else
+            return false;
     }
 }

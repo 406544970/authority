@@ -18,7 +18,6 @@ import static com.netflix.discovery.DiscoveryManager.*;
  * @editLog
  */
 @RestController
-@SpringBootApplication
 @EnableEurekaClient
 @RequestMapping(value = "/universal")     // 通过这里配置使下面的映射都在/users下，可去除
 @Api(value = "通用控制层", description = "专用于梁昊所要求的通用方法")

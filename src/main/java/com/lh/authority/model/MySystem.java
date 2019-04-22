@@ -8,6 +8,7 @@ package com.lh.authority.model;
  */
 public class MySystem {
     private String systemName;
+    private String helloPage;
     private String picPath;
     private String remark;
     private Integer enableSign;
@@ -42,5 +43,13 @@ public class MySystem {
 
     public void setEnableSign(Integer enableSign) {
         this.enableSign = enableSign;
+    }
+
+    public String getHelloPage() {
+        return helloPage;
+    }
+
+    public void setHelloPage(String helloPage) {
+        this.helloPage = helloPage;
     }
 }
