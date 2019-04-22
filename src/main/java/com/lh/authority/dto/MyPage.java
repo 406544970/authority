@@ -31,12 +31,4 @@ public class MyPage extends MySystem {
     public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
-
-//    public List<Group> getGroups() {
-//        return groups;
-//    }
-//
-//    public void setGroups(List<Group> groups) {
-//        this.groups = groups;
-//    }
 }
