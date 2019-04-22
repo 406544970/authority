@@ -25,15 +25,15 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.lh.list"))
+                .apis(RequestHandlerSelectors.basePackage("com.lh.authority"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Java List 常规用法演示")
-                .description("包括：group/having/sort/left join/inner join/分页/subList等")
+                .title("梁昊通用权限控制粘子层")
+                .description("包括：适用于BS、CS、公众号、小程序、安卓苹果跨平台调用")
                 .termsOfServiceUrl("http://www.baidu.com/")
                 .version("1.1")
                 .contact(new Contact("梁昊",null,"406544970@qq.com"))
