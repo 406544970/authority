@@ -3,7 +3,7 @@ package com.lh.authority.model;
 /**
  * @author 梁昊
  * @date 2019/4/22
- * @function
+ * @function 用户子系统权限列表
  * @editLog
  */
 public class MySystem {
