@@ -5,6 +5,7 @@ import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.MySystem;
 import com.lh.authority.model.MySystemPara;
 import com.lh.authority.model.MySystemParaAll;
+import com.lh.authority.model.OperatorAll;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface SystemService {
     List<MySystem> selectMySystemNameList(MySystemPara mySystemPara);
 
     MyPage selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
+
+    int updateByPrimaryKeyForJobName(OperatorAll operatorAll);
 }

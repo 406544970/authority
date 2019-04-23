@@ -4,6 +4,7 @@ import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.MySystem;
 import com.lh.authority.model.MySystemPara;
 import com.lh.authority.model.MySystemParaAll;
+import com.lh.authority.model.OperatorAll;
 import com.lh.authority.service.SystemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -89,5 +90,14 @@ public class MyAuthorityController {
         mySystemParaAll.setId(id);
         mySystemParaAll.setSystemName(systemName);
         return systemService.selectMyPageAuthorityList(mySystemParaAll);
+    }
+
+    @PostMapping("/updateByPrimaryKeyForJobName")
+    public int updateByPrimaryKeyForJobName(@RequestParam(value = "id") String id
+            , @RequestParam(value = "jobName") String jobName){
+        OperatorAll operatorAll = new OperatorAll();
+        operatorAll.setId(id);
+        operatorAll.setJobName(jobName);
+        return systemService.updateByPrimaryKeyForJobName(operatorAll);
     }
 }

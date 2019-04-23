@@ -1,10 +1,12 @@
 package com.lh.authority.service.impl;
 
+import com.lh.authority.dao.OperatorMapper;
 import com.lh.authority.dao.SystemMapper;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.MySystem;
 import com.lh.authority.model.MySystemPara;
 import com.lh.authority.model.MySystemParaAll;
+import com.lh.authority.model.OperatorAll;
 import com.lh.authority.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ import java.util.List;
 public class SystemServiceImpl implements SystemService {
     @Autowired
     SystemMapper systemMapper;
+
+    @Autowired
+    OperatorMapper operatorMapper;
 
     /**
      * 得到指定用户子系统权限列表
@@ -44,5 +49,15 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public MyPage selectMyPageAuthorityList(MySystemParaAll mySystemParaAll) {
         return systemMapper.selectMyPageAuthorityList(mySystemParaAll);
+    }
+
+    /**
+     * 根据用户ID，更新职位
+     * @param operatorAll
+     * @return 影响行数
+     */
+    @Override
+    public int updateByPrimaryKeyForJobName(OperatorAll operatorAll) {
+        return operatorMapper.updateByPrimaryKeyForJobName(operatorAll);
     }
 }
