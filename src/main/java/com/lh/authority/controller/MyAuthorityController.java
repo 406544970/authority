@@ -1,13 +1,16 @@
 package com.lh.authority.controller;
 
+import com.google.common.base.Supplier;
+import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.MySystem;
 import com.lh.authority.model.MySystemPara;
 import com.lh.authority.model.MySystemParaAll;
 import com.lh.authority.model.OperatorAll;
 import com.lh.authority.service.SystemService;
-import com.lishunyi.result.VO.ResultVO;
-import com.lishunyi.result.utils.ResultUtils;
+import com.lh.enums.ResultCodeEnums;
+import com.lh.tool.MD5Utils;
+import com.lh.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -121,13 +124,13 @@ public class MyAuthorityController {
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
         if (operatorAll == null) {
-            return ResultUtils.error("无此用户!");
+            return ResultUtils.error(ResultCodeEnums.ERROR.getCode(),"无此用户!");
         }
         if (operatorAll.getStopSign()) {
-            return ResultUtils.error("无此用户已被停用!");
+            return ResultUtils.error(ResultCodeEnums.ERROR.getCode(),"此用户已被停用！");
         }
-        if (!operatorAll.getPwd().equals(passWord)) {
-            return ResultUtils.error("密码错误!");
+        if (!operatorAll.getPwd().equals(MD5Utils.getMd5(passWord))) {
+            return ResultUtils.error(ResultCodeEnums.ERROR.getCode(),"密码错误！");
         }
         return ResultUtils.success(operatorAll);
     }
