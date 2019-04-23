@@ -124,13 +124,13 @@ public class MyAuthorityController {
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
         if (operatorAll == null) {
-            return ResultUtils.error(ResultCodeEnums.ERROR.getCode(),"无此用户!");
+            return ResultUtils.error("无此用户!");
         }
         if (operatorAll.getStopSign()) {
-            return ResultUtils.error(ResultCodeEnums.ERROR.getCode(),"此用户已被停用！");
+            return ResultUtils.error("此用户已被停用！");
         }
         if (!operatorAll.getPwd().equals(MD5Utils.getMd5(passWord))) {
-            return ResultUtils.error(ResultCodeEnums.ERROR.getCode(),"密码错误！");
+            return ResultUtils.error("密码错误！");
         }
         return ResultUtils.success(operatorAll);
     }
