@@ -9,8 +9,11 @@
     <!-- 注释：登录方法 -->
     <select id="useLog" resultMap="OperatorAllMap" parameterType="java.lang.String">
         SELECT
-        name
+        id
+        ,num
+        ,name
         ,pwd
+        ,jobName
         ,stopSign
         FROM sys_operator
         <where>

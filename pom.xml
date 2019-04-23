@@ -55,6 +55,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
+        <!--返回结构体-->
+        <dependency>
+            <groupId>resultVO</groupId>
+            <artifactId>resultVO</artifactId>
+            <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/resultVO.jar</systemPath>
+        </dependency>
         <!--redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

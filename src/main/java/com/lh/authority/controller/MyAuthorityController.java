@@ -6,6 +6,8 @@ import com.lh.authority.model.MySystemPara;
 import com.lh.authority.model.MySystemParaAll;
 import com.lh.authority.model.OperatorAll;
 import com.lh.authority.service.SystemService;
+import com.lishunyi.result.VO.ResultVO;
+import com.lishunyi.result.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -94,7 +96,7 @@ public class MyAuthorityController {
 
     @PostMapping("/updateByPrimaryKeyForJobName")
     public int updateByPrimaryKeyForJobName(@RequestParam(value = "id") String id
-            , @RequestParam(value = "jobName") String jobName){
+            , @RequestParam(value = "jobName") String jobName) {
         OperatorAll operatorAll = new OperatorAll();
         operatorAll.setId(id);
         operatorAll.setJobName(jobName);
@@ -109,13 +111,24 @@ public class MyAuthorityController {
      */
     @ApiOperation(value = "登录方法", notes = "返回状态")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "num", value = "工号(用工号作为登录用户名)", required = true, dataType = "String")
+            @ApiImplicitParam(name = "num", value = "工号(用工号作为登录用户名)", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "passWord", value = "密码", required = true, dataType = "String")
     })
     @PostMapping("/useLog")
-    public OperatorAll useLog(@RequestParam(value = "num") String num) {
+    public ResultVO useLog(@RequestParam(value = "num") String num
+            , @RequestParam(value = "passWord") String passWord) {
 
 //      请在这里写逻辑代码
-
-        return systemService.useLog(num);
+        OperatorAll operatorAll = systemService.useLog(num);
+        if (operatorAll == null) {
+            return ResultUtils.error("无此用户!");
+        }
+        if (operatorAll.getStopSign()) {
+            return ResultUtils.error("无此用户已被停用!");
+        }
+        if (!operatorAll.getPwd().equals(passWord)) {
+            return ResultUtils.error("密码错误!");
+        }
+        return ResultUtils.success(operatorAll);
     }
 }
