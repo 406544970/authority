@@ -60,4 +60,15 @@ public class SystemServiceImpl implements SystemService {
     public int updateByPrimaryKeyForJobName(OperatorAll operatorAll) {
         return operatorMapper.updateByPrimaryKeyForJobName(operatorAll);
     }
+
+    /**
+     * 登录方法
+     *
+     * @param num 工号(用工号作为登录用户名)
+     * @return 返回状态
+     */
+    @Override
+    public OperatorAll useLog(String num) {
+        return operatorMapper.useLog(num);
+    }
 }

@@ -27,4 +27,12 @@ public interface SystemService {
     MyPage selectMyPageAuthorityList(MySystemParaAll mySystemParaAll);
 
     int updateByPrimaryKeyForJobName(OperatorAll operatorAll);
+
+    /**
+     * 登录方法
+     *
+     * @param num 工号(用工号作为登录用户名)
+     * @return 返回状态
+     */
+    OperatorAll useLog(String num);
 }

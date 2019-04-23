@@ -100,4 +100,22 @@ public class MyAuthorityController {
         operatorAll.setJobName(jobName);
         return systemService.updateByPrimaryKeyForJobName(operatorAll);
     }
+
+    /**
+     * 登录方法
+     *
+     * @param num 工号(用工号作为登录用户名)
+     * @return 返回状态
+     */
+    @ApiOperation(value = "登录方法", notes = "返回状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "num", value = "工号(用工号作为登录用户名)", required = true, dataType = "String")
+    })
+    @PostMapping("/useLog")
+    public OperatorAll useLog(@RequestParam(value = "num") String num) {
+
+//      请在这里写逻辑代码
+
+        return systemService.useLog(num);
+    }
 }
