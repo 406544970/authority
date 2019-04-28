@@ -114,11 +114,6 @@
             <artifactId>pagehelper</artifactId>
             <version>4.1.6</version>
         </dependency>
-        <dependency>
-            <groupId>com.lh</groupId>
-            <artifactId>authority</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
