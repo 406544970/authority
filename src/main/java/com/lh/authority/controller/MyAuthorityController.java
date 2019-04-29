@@ -8,6 +8,7 @@ import com.lh.authority.model.MySystemPara;
 import com.lh.authority.model.MySystemParaAll;
 import com.lh.authority.model.OperatorAll;
 import com.lh.authority.service.SystemService;
+import com.lh.authority.unit.CookiesUtil;
 import com.lh.enums.ResultCodeEnums;
 import com.lh.tool.MD5Utils;
 import com.lh.utils.ResultUtils;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -37,6 +40,10 @@ import java.util.List;
 public class MyAuthorityController {
     @Autowired
     SystemService systemService;
+//    @Autowired
+//    HttpServletRequest httpServletRequest;
+    @Autowired
+    HttpServletResponse httpServletResponse;
 
     /**
      * 得到指定用户子系统权限列表
@@ -132,6 +139,8 @@ public class MyAuthorityController {
         if (!operatorAll.getPwd().equals(MD5Utils.getMd5(passWord))) {
             return ResultUtils.error("密码错误！");
         }
+
+//        CookiesUtil.setCookie(httpServletResponse,"some","somevalue",20);
         return ResultUtils.success(operatorAll);
     }
 }
