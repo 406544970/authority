@@ -28,7 +28,6 @@ public class MyAuthorityControllerTest {
 
     @Test
     public void selectMySystemNameList(){
-        List<MySystem> mySystems = myAuthorityController.selectMySystemNameList("001");
-        System.out.println(gson.toJson(mySystems));
+        System.out.println(gson.toJson(myAuthorityController.selectMySystemNameList("001")));
     }
 }

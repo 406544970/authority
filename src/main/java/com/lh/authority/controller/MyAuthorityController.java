@@ -1,15 +1,10 @@
 package com.lh.authority.controller;
 
-import com.google.common.base.Supplier;
 import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
-import com.lh.authority.model.MySystem;
-import com.lh.authority.model.MySystemPara;
-import com.lh.authority.model.MySystemParaAll;
-import com.lh.authority.model.OperatorAll;
+import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
 import com.lh.authority.unit.CookiesUtil;
-import com.lh.enums.ResultCodeEnums;
 import com.lh.tool.MD5Utils;
 import com.lh.utils.ResultUtils;
 import io.swagger.annotations.Api;
@@ -23,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author 梁昊
@@ -40,10 +35,6 @@ import java.util.List;
 public class MyAuthorityController {
     @Autowired
     SystemService systemService;
-//    @Autowired
-//    HttpServletRequest httpServletRequest;
-    @Autowired
-    HttpServletResponse httpServletResponse;
 
     /**
      * 得到指定用户子系统权限列表
@@ -56,10 +47,11 @@ public class MyAuthorityController {
             @ApiImplicitParam(name = "id", value = " 用户ID", required = true, dataType = "String")
     })
     @PostMapping("/selectMySystemNameList")
-    public List<MySystem> selectMySystemNameList(@RequestParam(value = "id") String id) {
+    public ResultVO selectMySystemNameList(@RequestParam(value = "id") String id) {
         MySystemPara mySystemPara = new MySystemPara();
         mySystemPara.setId(id);
-        return systemService.selectMySystemNameList(mySystemPara);
+//        List<MySystem> mySystems = ;
+        return ResultUtils.success(systemService.selectMySystemNameList(mySystemPara));
     }
 
     /**
@@ -126,7 +118,8 @@ public class MyAuthorityController {
     })
     @PostMapping("/useLog")
     public ResultVO useLog(@RequestParam(value = "num") String num
-            , @RequestParam(value = "passWord") String passWord) {
+            , @RequestParam(value = "passWord") String passWord
+            , HttpServletResponse response) {
 
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
@@ -139,8 +132,10 @@ public class MyAuthorityController {
         if (!operatorAll.getPwd().equals(MD5Utils.getMd5(passWord))) {
             return ResultUtils.error("密码错误！");
         }
-
-//        CookiesUtil.setCookie(httpServletResponse,"some","somevalue",20);
-        return ResultUtils.success(operatorAll);
+        LogModel logModel = new LogModel();
+        logModel.setUseId(operatorAll.getId());
+        logModel.setAccessToken(UUID.randomUUID().toString());
+//        CookiesUtil.setCookie(response,"some","somevalue",20);
+        return ResultUtils.success(logModel);
     }
 }
