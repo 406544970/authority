@@ -5,6 +5,7 @@ import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
 import com.lh.authority.unit.CookiesUtil;
+import com.lh.authority.unit.RedisOperator;
 import com.lh.tool.MD5Utils;
 import com.lh.utils.ResultUtils;
 import io.swagger.annotations.Api;
@@ -35,6 +36,9 @@ import java.util.UUID;
 public class MyAuthorityController {
     @Autowired
     SystemService systemService;
+
+    @Autowired
+    RedisOperator redisOperator;
 
     /**
      * 得到指定用户子系统权限列表
@@ -118,8 +122,7 @@ public class MyAuthorityController {
     })
     @PostMapping("/useLog")
     public ResultVO useLog(@RequestParam(value = "num") String num
-            , @RequestParam(value = "passWord") String passWord
-            , HttpServletResponse response) {
+            , @RequestParam(value = "passWord") String passWord) {
 
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
@@ -135,7 +138,10 @@ public class MyAuthorityController {
         LogModel logModel = new LogModel();
         logModel.setUseId(operatorAll.getId());
         logModel.setAccessToken(UUID.randomUUID().toString());
-//        CookiesUtil.setCookie(response,"some","somevalue",20);
+        redisOperator.writeIntoToken(logModel.getClientType()
+                ,logModel.getUseId()
+                ,logModel.getUseType()
+                ,logModel.getAccessToken());
         return ResultUtils.success(logModel);
     }
 }

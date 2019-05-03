@@ -9,13 +9,15 @@ package com.lh.authority.model;
 public class LogModel {
     public LogModel() {
         super();
-        this.useType = "BS";
+        this.useType = "Manager";
         this.timeOut = 24;
+        this.clientType= "BS";
     }
 
     private String useId;
     private String useType;
     private String accessToken;
+    private String clientType;
 
     public Integer getTimeOut() {
         return timeOut;
@@ -48,5 +50,13 @@ public class LogModel {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(String clientType) {
+        this.clientType = clientType;
     }
 }
