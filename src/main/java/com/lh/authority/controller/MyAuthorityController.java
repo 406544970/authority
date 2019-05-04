@@ -4,7 +4,6 @@ import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
-import com.lh.authority.unit.CookiesUtil;
 import com.lh.authority.unit.RedisOperator;
 import com.lh.tool.MD5Utils;
 import com.lh.utils.ResultUtils;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.UUID;
 
@@ -115,15 +113,18 @@ public class MyAuthorityController {
      * @param num 工号(用工号作为登录用户名)
      * @return 返回状态
      */
-    @ApiOperation(value = "登录方法", notes = "返回状态")
+    @ApiOperation(value = "登录方法,管理员、BS", notes = "返回状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "num", value = "工号(用工号作为登录用户名)", required = true, dataType = "String"),
             @ApiImplicitParam(name = "passWord", value = "密码", required = true, dataType = "String")
     })
-    @PostMapping("/useLog")
-    public ResultVO useLog(@RequestParam(value = "num") String num
+    @PostMapping("/useLogOfManagerInBS")
+    public ResultVO useLogOfManagerInBS(@RequestParam(value = "num") String num
             , @RequestParam(value = "passWord") String passWord) {
+        return useLog(num, passWord, "manager", "BS");
+    }
 
+    private ResultVO useLog(String num, String passWord, String useType, String clientType) {
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
         if (operatorAll == null) {
@@ -138,10 +139,16 @@ public class MyAuthorityController {
         LogModel logModel = new LogModel();
         logModel.setUseId(operatorAll.getId());
         logModel.setAccessToken(UUID.randomUUID().toString());
-        redisOperator.writeIntoToken(logModel.getClientType()
-                ,logModel.getUseId()
-                ,logModel.getUseType()
-                ,logModel.getAccessToken());
-        return ResultUtils.success(logModel);
+        logModel.setUseType(useType);
+        logModel.setClientType(clientType);
+        logModel.setTimeOut(redisOperator.getTimeUnit());
+        if (redisOperator.writeIntoToken(
+                logModel.getClientType()
+                , logModel.getUseId()
+                , logModel.getUseType()
+                , logModel.getAccessToken()))
+            return ResultUtils.success(logModel);
+        else
+            return ResultUtils.error();
     }
 }

@@ -23,6 +23,10 @@ public class LogModel {
         return timeOut;
     }
 
+    public void setTimeOut(Integer timeOut) {
+        this.timeOut = timeOut;
+    }
+
     /**
      * 超时时间：秒，默认值：3600秒
      */
