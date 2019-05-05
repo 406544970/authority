@@ -1,15 +1,15 @@
 package com.lh.authority.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import static com.netflix.discovery.DiscoveryManager.*;
+import static com.netflix.discovery.DiscoveryManager.getInstance;
 
 /**
  * @author 梁昊
@@ -24,9 +24,9 @@ import static com.netflix.discovery.DiscoveryManager.*;
 public class UniversalController {
     public UniversalController() {
         super();
-        this.version = "1.0.0.1";
     }
 
+    @Value("${eureka.instance.metadata-map.version}")
     private String version;
 
     @Value("${server.port}")
@@ -41,8 +41,9 @@ public class UniversalController {
     @ApiOperation(value = "得到当前版本号", notes = "返回：当前版本号")
     @PostMapping("/myVersion")
     public String getVersion() {
-        return String.format("I am is version:%s", version);
+        return String.format("My port is : %s;My version is : %s", port, version);
     }
+
     /**
      * @return 返回当前端口号
      */
