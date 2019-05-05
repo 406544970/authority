@@ -41,7 +41,7 @@ public class UniversalController {
     @ApiOperation(value = "得到当前版本号", notes = "返回：当前版本号")
     @PostMapping("/myVersion")
     public String getVersion() {
-        return String.format("My port is : %s;My version is : %s", port, version);
+        return String.format("My port is : %s; My version is : %s", port, version);
     }
 
     /**
