@@ -1,13 +1,17 @@
 package com.lh.authority.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Logger;
 
 import static com.netflix.discovery.DiscoveryManager.getInstance;
 
@@ -34,6 +38,19 @@ public class UniversalController {
 
     @Value("${spring.application.name}")
     private String springApplicationName;
+
+    @ApiOperation(value = "测试Feign熔断时间",notes = "hi")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "timeOut", value = " 超时时间", required = true, dataType = "long")
+    })@PostMapping("/testTimeOut")
+    public String testTimeOut(@RequestParam(value = "timeOut")long timeOut) throws InterruptedException {
+        Logger logger = Logger.getLogger("Feign:");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        logger.info("Begin Feign :(" + timeOut + ")" + df.format(new Date()));
+        Thread.sleep(timeOut);
+        logger.info("End Feign :(" + timeOut + ")" + df.format(new Date()));
+        return String.format("TimeOut : %d",timeOut);
+    }
 
     /**
      * @return 返回当前版本号
