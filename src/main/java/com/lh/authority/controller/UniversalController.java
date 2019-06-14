@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import static com.netflix.discovery.DiscoveryManager.getInstance;
 @EnableEurekaClient
 @RequestMapping(value = "/universal")     // 通过这里配置使下面的映射都在/users下，可去除
 @Api(value = "通用控制层", description = "专用于梁昊所要求的通用方法")
+@RefreshScope
 public class UniversalController {
     public UniversalController() {
         super();
@@ -39,17 +41,21 @@ public class UniversalController {
     @Value("${spring.application.name}")
     private String springApplicationName;
 
-    @ApiOperation(value = "测试Feign熔断时间",notes = "hi")
+    @Value("${liangHaoSign}")
+    private String liangHaoSign;
+
+    @ApiOperation(value = "测试Feign熔断时间", notes = "hi")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "timeOut", value = " 超时时间", required = true, dataType = "long")
-    })@PostMapping("/testTimeOut")
-    public String testTimeOut(@RequestParam(value = "timeOut")long timeOut) throws InterruptedException {
+    })
+    @PostMapping("/testTimeOut")
+    public String testTimeOut(@RequestParam(value = "timeOut") long timeOut) throws InterruptedException {
         Logger logger = Logger.getLogger("Feign:");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         logger.info("Begin Feign :(" + timeOut + ")" + df.format(new Date()));
         Thread.sleep(timeOut);
         logger.info("End Feign :(" + timeOut + ")" + df.format(new Date()));
-        return String.format("TimeOut : %d",timeOut);
+        return String.format("TimeOut : %d", timeOut);
     }
 
     /**
@@ -80,4 +86,12 @@ public class UniversalController {
         return String.format("ApplicationName\"%s\"(Port:%s) is downLine.", this.springApplicationName, this.port);
     }
 
+    /**
+     * @return 返回当前端口号
+     */
+    @ApiOperation(value = "得到参数标识", notes = "返回：参数标识")
+    @PostMapping("/GetParamSign")
+    public String GetParamSign() {
+        return String.format("liangHaoSign:\"%s\"", liangHaoSign);
+    }
 }
