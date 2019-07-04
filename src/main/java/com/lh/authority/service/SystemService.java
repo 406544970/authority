@@ -1,11 +1,9 @@
 package com.lh.authority.service;
 
 
+import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
-import com.lh.authority.model.MySystem;
-import com.lh.authority.model.MySystemPara;
-import com.lh.authority.model.MySystemParaAll;
-import com.lh.authority.model.OperatorAll;
+import com.lh.authority.model.*;
 
 import java.util.List;
 
@@ -35,4 +33,8 @@ public interface SystemService {
      * @return 返回状态
      */
     OperatorAll useLog(String num);
+    boolean insertMongodb();
+    int insertPatchData();
+    int deleteMongodb();
+    ResultVO getLogModelList() throws ClassNotFoundException;
 }

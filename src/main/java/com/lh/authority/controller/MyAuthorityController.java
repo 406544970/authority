@@ -97,7 +97,20 @@ public class MyAuthorityController {
         mySystemParaAll.setSystemName(systemName);
         return systemService.selectMyPageAuthorityList(mySystemParaAll);
     }
+    @PostMapping("/insertMongodb")
+    public boolean insertMongodb(){
+        return systemService.insertMongodb();
+    }
 
+    @PostMapping("/insertPatchToMongodb")
+    public int insertPatchToMongodb(){
+        return systemService.insertPatchData();
+    }
+
+    @PostMapping("/deleteMongodb")
+    public int deleteMongodb(){
+        return systemService.deleteMongodb();
+    }
     @PostMapping("/updateByPrimaryKeyForJobName")
     public int updateByPrimaryKeyForJobName(@RequestParam(value = "id") String id
             , @RequestParam(value = "jobName") String jobName) {
@@ -105,6 +118,10 @@ public class MyAuthorityController {
         operatorAll.setId(id);
         operatorAll.setJobName(jobName);
         return systemService.updateByPrimaryKeyForJobName(operatorAll);
+    }
+    @PostMapping("/getLogModelList")
+    public ResultVO getLogModelList() throws ClassNotFoundException {
+        return systemService.getLogModelList();
     }
 
     /**

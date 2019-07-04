@@ -1,13 +1,12 @@
 package com.lh.authority.service.impl;
 
+import com.lh.VO.ResultVO;
 import com.lh.authority.dao.OperatorMapper;
 import com.lh.authority.dao.SystemMapper;
 import com.lh.authority.dto.MyPage;
-import com.lh.authority.model.MySystem;
-import com.lh.authority.model.MySystemPara;
-import com.lh.authority.model.MySystemParaAll;
-import com.lh.authority.model.OperatorAll;
+import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
+import com.lh.authority.unit.MongodbOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,8 @@ public class SystemServiceImpl implements SystemService {
 
     @Autowired
     OperatorMapper operatorMapper;
+    @Autowired
+    MongodbOperator mongodbOperator;
 
     /**
      * 得到指定用户子系统权限列表
@@ -53,6 +54,7 @@ public class SystemServiceImpl implements SystemService {
 
     /**
      * 根据用户ID，更新职位
+     *
      * @param operatorAll
      * @return 影响行数
      */
@@ -70,5 +72,26 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public OperatorAll useLog(String num) {
         return operatorMapper.useLog(num);
+    }
+
+    @Override
+    public boolean insertMongodb() {
+        mongodbOperator.insertMongodb();
+        return true;
+    }
+
+    @Override
+    public int insertPatchData() {
+        return mongodbOperator.insertPatchData();
+    }
+
+    @Override
+    public int deleteMongodb() {
+        return mongodbOperator.deleteMongodb();
+    }
+
+    @Override
+    public ResultVO getLogModelList() throws ClassNotFoundException {
+        return mongodbOperator.getLogModelListNew();
     }
 }
