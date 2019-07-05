@@ -11,6 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lh.myenum.ResultCode;
+import lh.toolclass.LhClass;
+import lh.toolclass.ReturnClass;
+import lh.toolclass.ReturnPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.*;
@@ -147,6 +151,16 @@ public class MyAuthorityController {
     @DeleteMapping("/deleteCollect")
     public void deleteCollect(){
         systemService.deleteCollect();
+    }
+
+    @GetMapping("/testJar")
+    public ReturnClass testJar(String test){
+        ReturnPage returnPage = new ReturnPage();
+        returnPage.setTotal(99);
+        returnPage.setData(test);
+        ReturnClass returnClass = new ReturnClass();
+        returnClass.success(returnPage);
+        return returnClass;
     }
 
     private ResultVO useLog(String num, String passWord, String useType, String clientType) {

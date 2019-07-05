@@ -73,6 +73,14 @@
             <systemPath>${basedir}/lib/resultVO.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>ToolJar</groupId>
+            <artifactId>ToolJar</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ToolJar.jar</systemPath>
+        </dependency>
+        <!--mongodb-->
+        <dependency>
             <groupId>com.lh</groupId>
             <artifactId>mongodb</artifactId>
             <version>1.0</version>
