@@ -5,6 +5,7 @@ import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -37,4 +38,5 @@ public interface SystemService {
     int insertPatchData();
     int deleteMongodb();
     ResultVO getLogModelList() throws ClassNotFoundException;
+    ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException;
 }

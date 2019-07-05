@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
 
@@ -122,6 +123,11 @@ public class MyAuthorityController {
     @PostMapping("/getLogModelList")
     public ResultVO getLogModelList() throws ClassNotFoundException {
         return systemService.getLogModelList();
+    }
+
+    @PostMapping("/getLogModelListNew")
+    public ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException {
+        return systemService.getLogModelListNew();
     }
 
     /**
