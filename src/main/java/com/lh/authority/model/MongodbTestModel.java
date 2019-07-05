@@ -1,10 +1,12 @@
 package com.lh.authority.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
-
+@Document(collection = "test_Collect2")
 public class MongodbTestModel {
     private Integer sortNo;
     private Date createData;

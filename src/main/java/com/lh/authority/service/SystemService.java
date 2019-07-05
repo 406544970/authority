@@ -39,4 +39,5 @@ public interface SystemService {
     int deleteMongodb();
     ResultVO getLogModelList() throws ClassNotFoundException;
     ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException;
+    void deleteCollect();
 }

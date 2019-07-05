@@ -1,5 +1,7 @@
 package com.lh.authority.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @author 梁昊
  * @date 2019/4/30

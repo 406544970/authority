@@ -103,4 +103,9 @@ public class SystemServiceImpl implements SystemService {
     public ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException {
         return mongodbJar.getLogModelListNew();
     }
+
+    @Override
+    public void deleteCollect() {
+        mongodbJar.deleteCollect();
+    }
 }

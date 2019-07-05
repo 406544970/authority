@@ -13,10 +13,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -145,6 +142,11 @@ public class MyAuthorityController {
     public ResultVO useLogOfManagerInBS(@RequestParam(value = "num") String num
             , @RequestParam(value = "passWord") String passWord) {
         return useLog(num, passWord, "manager", "BS");
+    }
+
+    @DeleteMapping("/deleteCollect")
+    public void deleteCollect(){
+        systemService.deleteCollect();
     }
 
     private ResultVO useLog(String num, String passWord, String useType, String clientType) {

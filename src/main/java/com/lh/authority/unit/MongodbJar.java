@@ -6,8 +6,11 @@ import com.lh.mongodb.model.CriterialFilter;
 import com.lh.mongodb.model.MongodbSelect;
 import com.lh.mongodb.model.SortModel;
 import com.lh.mongodb.myenum.CriteriaOperate;
+import com.lh.mongodb.tool.ChangeAction;
 import com.lh.mongodb.tool.SelectAction;
 import com.lh.utils.ResultUtils;
+import javafx.scene.control.TextFormatter;
+import org.aspectj.lang.annotation.After;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,7 @@ public class MongodbJar {
 
     private String collectName;
     private SelectAction selectAction;
+    private ChangeAction changeAction;
 
     public void setCollectName(String collectName) {
         this.collectName = collectName;
@@ -32,7 +36,12 @@ public class MongodbJar {
         super();
         setCollectName("test_Collect");
         selectAction = new SelectAction(this.collectName);
+        changeAction = new ChangeAction(this.collectName);
 //        selectAction.setMongoTemplate(this.mongoTemplate);
+    }
+    public void deleteCollect(){
+        changeAction.setMongoTemplate(this.mongoTemplate);
+        changeAction.clearCollection(this.collectName);
     }
     public ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException {
         selectAction.setMongoTemplate(this.mongoTemplate);

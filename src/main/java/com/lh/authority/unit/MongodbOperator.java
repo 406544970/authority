@@ -50,7 +50,7 @@ public class MongodbOperator {
             mongodbTestModel.setStopSign((i % 2) == 0 ? true : false);
             mongodbTestModel.setTestContent(String.format("TestContent%s", i));
             mongodbTestModel.setTestOrContent(String.format("TestOrContent%s", i));
-            mongoTemplate.insert(mongodbTestModel, this.collectName);
+            mongoTemplate.insert(mongodbTestModel);
         }
         return true;
     }
