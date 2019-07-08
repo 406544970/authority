@@ -4,6 +4,7 @@ package com.lh.authority.service;
 import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
+import lh.toolclass.ReturnClass;
 
 import java.text.ParseException;
 import java.util.List;
@@ -38,6 +39,6 @@ public interface SystemService {
     int insertPatchData();
     int deleteMongodb();
     ResultVO getLogModelList() throws ClassNotFoundException;
-    ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException;
+    ReturnClass getLogModelListNew() throws ClassNotFoundException, ParseException;
     void deleteCollect();
 }

@@ -80,14 +80,6 @@
             <systemPath>${basedir}/lib/ToolJar.jar</systemPath>
         </dependency>
         <!--mongodb-->
-        <!--<dependency>-->
-            <!--<groupId>com.lh</groupId>-->
-            <!--<artifactId>mongodb</artifactId>-->
-            <!--<version>1.0</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${basedir}/lib/mongodb.jar</systemPath>-->
-        <!--</dependency>-->
-        <!--mongodb-->
         <dependency>
             <groupId>com.lh</groupId>
             <artifactId>mymongodb</artifactId>

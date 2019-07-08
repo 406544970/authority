@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
-@Document(collection = "test_Collect2")
+@Document(collection = "test_Collect")
 public class MongodbTestModel {
     private Integer sortNo;
     private Date createData;

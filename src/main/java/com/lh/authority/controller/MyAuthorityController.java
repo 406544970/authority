@@ -127,7 +127,7 @@ public class MyAuthorityController {
     }
 
     @PostMapping("/getLogModelListNew")
-    public ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException {
+    public ReturnClass getLogModelListNew() throws ClassNotFoundException, ParseException {
         return systemService.getLogModelListNew();
     }
 

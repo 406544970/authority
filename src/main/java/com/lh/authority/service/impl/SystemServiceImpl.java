@@ -7,7 +7,7 @@ import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
 import com.lh.authority.unit.MongodbNewJar;
-import com.lh.authority.unit.MongodbOperator;
+import lh.toolclass.ReturnClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +28,6 @@ public class SystemServiceImpl implements SystemService {
 
     @Autowired
     OperatorMapper operatorMapper;
-    @Autowired
-    MongodbOperator mongodbOperator;
 
     @Autowired
     MongodbNewJar mongodbJar;
@@ -81,26 +79,29 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public boolean insertMongodb() {
-        mongodbOperator.insertMongodb();
+//        mongodbOperator.insertMongodb();
         return true;
     }
 
     @Override
     public int insertPatchData() {
-        return mongodbOperator.insertPatchData();
+//        return mongodbOperator.insertPatchData();
+        return 0;
     }
 
     @Override
     public int deleteMongodb() {
-        return mongodbOperator.deleteMongodb();
+//        return mongodbOperator.deleteMongodb();
+        return 0;
     }
 
     @Override
     public ResultVO getLogModelList() throws ClassNotFoundException {
-        return mongodbOperator.getLogModelListNew();
+//        return mongodbOperator.getLogModelListNew();
+        return null;
     }
     @Override
-    public ResultVO getLogModelListNew() throws ClassNotFoundException, ParseException {
+    public ReturnClass getLogModelListNew() throws ClassNotFoundException, ParseException {
         return mongodbJar.getLogModelListNew();
     }
 
