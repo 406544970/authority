@@ -6,7 +6,7 @@ import com.lh.authority.dao.SystemMapper;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
-import com.lh.authority.unit.MongodbJar;
+import com.lh.authority.unit.MongodbNewJar;
 import com.lh.authority.unit.MongodbOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class SystemServiceImpl implements SystemService {
     MongodbOperator mongodbOperator;
 
     @Autowired
-    MongodbJar mongodbJar;
+    MongodbNewJar mongodbJar;
 
     /**
      * 得到指定用户子系统权限列表
@@ -106,6 +106,6 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public void deleteCollect() {
-        mongodbJar.deleteCollect();
+//        mongodbJar.deleteCollect();
     }
 }

@@ -80,12 +80,20 @@
             <systemPath>${basedir}/lib/ToolJar.jar</systemPath>
         </dependency>
         <!--mongodb-->
+        <!--<dependency>-->
+            <!--<groupId>com.lh</groupId>-->
+            <!--<artifactId>mongodb</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${basedir}/lib/mongodb.jar</systemPath>-->
+        <!--</dependency>-->
+        <!--mongodb-->
         <dependency>
             <groupId>com.lh</groupId>
-            <artifactId>mongodb</artifactId>
+            <artifactId>mymongodb</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/mongodb.jar</systemPath>
+            <systemPath>${basedir}/lib/mymongodb.jar</systemPath>
         </dependency>
         <!--redis-->
         <dependency>
