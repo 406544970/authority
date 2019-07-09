@@ -17,7 +17,9 @@ import lh.toolclass.ReturnClass;
 import lh.toolclass.ReturnPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import tool.RedisAction;
 
 import java.text.ParseException;
 import java.util.List;
@@ -99,20 +101,22 @@ public class MyAuthorityController {
         mySystemParaAll.setSystemName(systemName);
         return systemService.selectMyPageAuthorityList(mySystemParaAll);
     }
+
     @PostMapping("/insertMongodb")
-    public boolean insertMongodb(){
+    public boolean insertMongodb() {
         return systemService.insertMongodb();
     }
 
     @PostMapping("/insertPatchToMongodb")
-    public int insertPatchToMongodb(){
+    public int insertPatchToMongodb() {
         return systemService.insertPatchData();
     }
 
     @PostMapping("/deleteMongodb")
-    public int deleteMongodb(){
+    public int deleteMongodb() {
         return systemService.deleteMongodb();
     }
+
     @PostMapping("/updateByPrimaryKeyForJobName")
     public int updateByPrimaryKeyForJobName(@RequestParam(value = "id") String id
             , @RequestParam(value = "jobName") String jobName) {
@@ -121,6 +125,7 @@ public class MyAuthorityController {
         operatorAll.setJobName(jobName);
         return systemService.updateByPrimaryKeyForJobName(operatorAll);
     }
+
     @PostMapping("/getLogModelList")
     public ResultVO getLogModelList() throws ClassNotFoundException {
         return systemService.getLogModelList();
@@ -149,12 +154,12 @@ public class MyAuthorityController {
     }
 
     @DeleteMapping("/deleteCollect")
-    public void deleteCollect(){
+    public void deleteCollect() {
         systemService.deleteCollect();
     }
 
     @GetMapping("/testJar")
-    public ReturnClass testJar(String test){
+    public ReturnClass testJar(String test) {
         ReturnPage returnPage = new ReturnPage();
         returnPage.setTotal(99);
         returnPage.setData(test);
@@ -189,5 +194,61 @@ public class MyAuthorityController {
             return ResultUtils.success(logModel);
         else
             return ResultUtils.error();
+    }
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
+    @PostMapping("/testRedis")
+    public void testRedis() {
+        RedisAction redisAction = new RedisAction();
+        redisAction.setStringRedisTemplate(stringRedisTemplate);
+        redisAction.saveKeyAndValue("key1", "value1");
+    }
+
+    @PostMapping("/pushList")
+    public void pushList() {
+        RedisAction redisAction = new RedisAction();
+        redisAction.setStringRedisTemplate(stringRedisTemplate);
+        for (int i = 0; i < 10; i++) {
+            long list1 = redisAction.saveRightPush("List1", i + "_index");
+            System.out.println(list1);
+        }
+    }
+
+    @PostMapping("/getList")
+    public void getList() {
+        RedisAction redisAction = new RedisAction();
+        redisAction.setStringRedisTemplate(stringRedisTemplate);
+        List<String> list1 = redisAction.getListAll("List1");
+        for (String row :
+                list1) {
+            System.out.println(row);
+        }
+    }
+
+    @PostMapping("/getListNum")
+    public void getListNum(long begin, long end) {
+        RedisAction redisAction = new RedisAction();
+        redisAction.setStringRedisTemplate(stringRedisTemplate);
+        List<String> list1 = redisAction.getList("List1", begin, end);
+        for (String row :
+                list1) {
+            System.out.println(row);
+        }
+    }
+
+    @PostMapping("/removeKey")
+    public long removeKey() {
+        RedisAction redisAction = new RedisAction();
+        redisAction.setStringRedisTemplate(stringRedisTemplate);
+        return redisAction.clearList("List1");
+    }
+
+    @PostMapping("/updateListByValue")
+    public long updateListByValue(String oldValue, String newValue) {
+        RedisAction redisAction = new RedisAction();
+        redisAction.setStringRedisTemplate(stringRedisTemplate);
+        return redisAction.updateListByValue("List1", oldValue, newValue);
     }
 }
