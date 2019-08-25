@@ -12,7 +12,7 @@ public class AuthorityApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AuthorityApplication.class, args);
-//        System.out.println("http://localhost:2510/swagger-ui.html");
+        System.out.println("http://localhost:2510/swagger-ui.html");
     }
 
 }

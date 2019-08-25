@@ -82,6 +82,14 @@
         <!--mongodb-->
         <dependency>
             <groupId>com.lh</groupId>
+            <artifactId>mybatisHelper</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/mybatisHelper.jar</systemPath>
+        </dependency>
+        <!--mongodb-->
+        <dependency>
+            <groupId>com.lh</groupId>
             <artifactId>mymongodb</artifactId>
             <version>1.0</version>
             <scope>system</scope>

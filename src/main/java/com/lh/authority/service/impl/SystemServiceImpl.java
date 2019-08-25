@@ -109,4 +109,5 @@ public class SystemServiceImpl implements SystemService {
     public void deleteCollect() {
 //        mongodbJar.deleteCollect();
     }
+
 }

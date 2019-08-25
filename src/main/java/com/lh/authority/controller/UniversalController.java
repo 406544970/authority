@@ -1,9 +1,12 @@
 package com.lh.authority.controller;
 
+import com.lh.authority.model.User;
+import com.lh.authority.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static com.netflix.discovery.DiscoveryManager.getInstance;
