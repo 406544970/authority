@@ -1,10 +1,6 @@
 package com.lh.authority.unit;
 
-import com.lh.VO.ResultVO;
 import com.lh.authority.model.MongodbTestModel;
-import com.lh.utils.ResultUtils;
-import lh.toolclass.ReturnClass;
-import lh.toolclass.ReturnPage;
 import model.CriterialFilter;
 import model.MongodbSelect;
 import model.SortModel;
@@ -13,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import tool.SelectAction;
+import lh.units.ResultStruct;
+import lh.model.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 @Component
 public class MongodbNewJar {
@@ -36,7 +35,7 @@ public class MongodbNewJar {
         selectAction = new SelectAction(this.collectName);
 //        changeAction = new ChangeAction(hostAndPortModel,this.databaseName,null,null,this.collectName,null);
     }
-    public ReturnClass getLogModelListNew() throws ClassNotFoundException, ParseException {
+    public ResultVOTotal getLogModelListNew() throws ClassNotFoundException, ParseException {
         selectAction.setMongoTemplate(this.mongoTemplate);
         MongodbSelect mongodbSelect = new MongodbSelect(MongodbTestModel.class);
 
@@ -81,13 +80,13 @@ public class MongodbNewJar {
         mongodbSelect.setCriterialFilterList(criteriaFilters);
         List<MongodbTestModel> mongodbListNew = selectAction.getMongodbList(MongodbTestModel.class, mongodbSelect);
 
-        ReturnPage returnPage = new ReturnPage();
+        ResultVO returnPage = new ResultVO();
         returnPage.setData(mongodbListNew);
-        returnPage.setTotal(mongodbSelect.getDataTotal());
-        ReturnClass returnClass = new ReturnClass();
-        returnClass.success(returnPage,String.format("hahaha%s", mongodbSelect.getDataTotal()));
 
-        return returnClass;
+        LinkedHashMap<String,Integer> linkedHashMap = new LinkedHashMap<>();
+        linkedHashMap.put("some",mongodbSelect.getDataTotal());
+
+        return ResultStruct.successTotal(mongodbListNew,linkedHashMap);
 
     }
 

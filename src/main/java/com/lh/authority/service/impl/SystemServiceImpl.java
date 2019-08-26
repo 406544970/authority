@@ -1,13 +1,13 @@
 package com.lh.authority.service.impl;
 
-import com.lh.VO.ResultVO;
 import com.lh.authority.dao.OperatorMapper;
 import com.lh.authority.dao.SystemMapper;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
 import com.lh.authority.unit.MongodbNewJar;
-import lh.toolclass.ReturnClass;
+import lh.model.ResultVO;
+import lh.model.ResultVOTotal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,7 +101,7 @@ public class SystemServiceImpl implements SystemService {
         return null;
     }
     @Override
-    public ReturnClass getLogModelListNew() throws ClassNotFoundException, ParseException {
+    public ResultVOTotal getLogModelListNew() throws ClassNotFoundException, ParseException {
         return mongodbJar.getLogModelListNew();
     }
 

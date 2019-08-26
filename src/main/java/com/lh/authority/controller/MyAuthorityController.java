@@ -1,20 +1,17 @@
 package com.lh.authority.controller;
 
-import com.lh.VO.ResultVO;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
 import com.lh.authority.unit.RedisOperator;
-import com.lh.tool.MD5Utils;
-import com.lh.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lh.myenum.ResultCode;
-import lh.toolclass.LhClass;
-import lh.toolclass.ReturnClass;
-import lh.toolclass.ReturnPage;
+import lh.model.ResultVO;
+import lh.model.ResultVOTotal;
+import lh.toolclass.MD5Utils;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -57,7 +54,7 @@ public class MyAuthorityController {
         MySystemPara mySystemPara = new MySystemPara();
         mySystemPara.setId(id);
 //        List<MySystem> mySystems = ;
-        return ResultUtils.success(systemService.selectMySystemNameList(mySystemPara));
+        return ResultStruct.success(systemService.selectMySystemNameList(mySystemPara));
     }
 
     /**
@@ -132,7 +129,7 @@ public class MyAuthorityController {
     }
 
     @PostMapping("/getLogModelListNew")
-    public ReturnClass getLogModelListNew() throws ClassNotFoundException, ParseException {
+    public ResultVOTotal getLogModelListNew() throws ClassNotFoundException, ParseException {
         return systemService.getLogModelListNew();
     }
 
@@ -158,27 +155,17 @@ public class MyAuthorityController {
         systemService.deleteCollect();
     }
 
-    @GetMapping("/testJar")
-    public ReturnClass testJar(String test) {
-        ReturnPage returnPage = new ReturnPage();
-        returnPage.setTotal(99);
-        returnPage.setData(test);
-        ReturnClass returnClass = new ReturnClass();
-        returnClass.success(returnPage);
-        return returnClass;
-    }
-
     private ResultVO useLog(String num, String passWord, String useType, String clientType) {
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
         if (operatorAll == null) {
-            return ResultUtils.error("无此用户!");
+            return ResultStruct.error("无此用户!",ResultVO.class);
         }
         if (operatorAll.getStopSign()) {
-            return ResultUtils.error("此用户已被停用！");
+            return ResultStruct.error("此用户已被停用！",ResultVO.class);
         }
         if (!operatorAll.getPwd().equals(MD5Utils.getMd5(passWord))) {
-            return ResultUtils.error("密码错误！");
+            return ResultStruct.error("密码错误！",ResultVO.class);
         }
         LogModel logModel = new LogModel();
         logModel.setUseId(operatorAll.getId());
@@ -191,9 +178,9 @@ public class MyAuthorityController {
                 , logModel.getUseId()
                 , logModel.getUseType()
                 , logModel.getAccessToken()))
-            return ResultUtils.success(logModel);
+            return ResultStruct.success(logModel);
         else
-            return ResultUtils.error();
+            return ResultStruct.error(ResultVO.class);
     }
 
     @Autowired

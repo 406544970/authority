@@ -2,16 +2,16 @@ package com.lh.authority.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.lh.VO.ResultVOPageTotal;
 import com.lh.authority.dto.UserDto;
 import com.lh.authority.model.InPutParam.UserInPutPara;
 import com.lh.authority.model.User;
 import com.lh.authority.service.UserService;
-import com.lh.utils.ResultStruct;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lh.model.ResultVOPageTotal;
+import lh.units.ResultStruct;
 import model.TotalValueClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

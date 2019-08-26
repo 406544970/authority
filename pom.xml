@@ -65,13 +65,13 @@
             <!--<artifactId>spring-cloud-starter-zipkin</artifactId>-->
         <!--</dependency>-->
         <!--返回结构体-->
-        <dependency>
-            <groupId>resultVO</groupId>
-            <artifactId>resultVO</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/resultVO.jar</systemPath>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>resultVO</groupId>-->
+            <!--<artifactId>resultVO</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${basedir}/lib/resultVO.jar</systemPath>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>ToolJar</groupId>
             <artifactId>ToolJar</artifactId>
