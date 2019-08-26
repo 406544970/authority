@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lh.authority.dao.PerMapper">
+    <resultMap id="ResultPerMap" type="com.lh.authority.dto.PerDto">
+        <id column="countId" property="countId" jdbcType="VARCHAR"/><!-- 主键 -->
+        <result column="sex" property="sex" jdbcType="INTEGER"/><!--  性别（0：男、1：女） -->
+        <result column="subjectName" property="subjectName" jdbcType="VARCHAR"/><!--  科目名称 -->
+        <result column="achievement" property="achievement" jdbcType="INTEGER"/><!-- 成绩 -->
+    </resultMap>
+    <!-- 注释：1.	根据课程名和性别，统计出各科平均成绩、参加人次数、参加人数，并按平均成绩降序排序，性别排序 -->
+    <select id="getPerAchList" resultMap="ResultPerMap" >
+        SELECT
+            COUNT(per.id) AS countId
+            ,per.sex AS sex
+            ,ach.subjectName AS subjectName
+            ,SUM(ach.achievement) AS achievement
+        FROM t_person AS per
+        INNER JOIN t_achievement AS ach ON per.id = ach.perId
+        GROUP BY per.sex,ach.subjectName
+        ORDER BY per.sex,ach.subjectName,SUM(ach.achievement)
+    </select>
+
+    <!-- 注释：InnerJoin查询 -->
+    <select id="getPerAchList2" resultType="com.lh.authority.dto.Per1Dto" parameterType="java.lang.String">
+        SELECT
+        per.name AS name
+        ,CASE per.sex
+        WHEN 0 THEN '男'
+        ELSE '女'
+        END AS sex
+        ,per.age AS age
+        ,per.classNo AS classNo
+        ,ach.subjectName AS subjectName
+        ,ach.achievement AS achievement
+        ,DATE_FORMAT(ach.workTime,'%Y-%m-%d') AS workTime
+        FROM t_person AS per
+        INNER JOIN t_achievement AS ach ON per.id = ach.perId
+        <where>
+            <if test="name != null">
+                AND per.name like CONCAT('%',#{name,jdbcType=VARCHAR})
+            </if>
+        </where>
+        ORDER BY per.sex,ach.subjectName,ach.achievement DESC
+    </select>
+
+</mapper>

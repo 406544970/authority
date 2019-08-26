@@ -2,7 +2,6 @@ package com.lh.authority;
 
 import com.google.gson.Gson;
 import com.lh.authority.controller.MyAuthorityController;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,8 +23,8 @@ public class MyAuthorityControllerTest {
     @Autowired
     MyAuthorityController myAuthorityController;
 
-    @Test
-    public void selectMySystemNameList(){
-        System.out.println(gson.toJson(myAuthorityController.selectMySystemNameList("001")));
-    }
+//    @Test
+//    public void selectMySystemNameList(){
+//        System.out.println(gson.toJson(myAuthorityController.selectMySystemNameList("001")));
+//    }
 }
