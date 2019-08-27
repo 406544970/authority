@@ -159,13 +159,13 @@ public class MyAuthorityController {
 //      请在这里写逻辑代码
         OperatorAll operatorAll = systemService.useLog(num);
         if (operatorAll == null) {
-            return ResultStruct.error("无此用户!",ResultVO.class);
+            return ResultStruct.error("无此用户!", ResultVO.class);
         }
         if (operatorAll.getStopSign()) {
-            return ResultStruct.error("此用户已被停用！",ResultVO.class);
+            return ResultStruct.error("此用户已被停用！", ResultVO.class);
         }
         if (!operatorAll.getPwd().equals(MD5Utils.getMd5(passWord))) {
-            return ResultStruct.error("密码错误！",ResultVO.class);
+            return ResultStruct.error("密码错误！", ResultVO.class);
         }
         LogModel logModel = new LogModel();
         logModel.setUseId(operatorAll.getId());
@@ -237,5 +237,10 @@ public class MyAuthorityController {
         RedisAction redisAction = new RedisAction();
         redisAction.setStringRedisTemplate(stringRedisTemplate);
         return redisAction.updateListByValue("List1", oldValue, newValue);
+    }
+
+    @PostMapping("/updateMongodb")
+    public int updateMongodb(String WhereValue, String SetValue) throws ParseException {
+        return systemService.updateMongodbFirstTest(WhereValue, SetValue);
     }
 }

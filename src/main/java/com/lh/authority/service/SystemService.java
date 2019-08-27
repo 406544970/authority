@@ -28,6 +28,7 @@ public interface SystemService {
 
     int updateByPrimaryKeyForJobName(OperatorAll operatorAll);
 
+
     /**
      * 登录方法
      *
@@ -41,4 +42,5 @@ public interface SystemService {
     ResultVO getLogModelList() throws ClassNotFoundException;
     ResultVOTotal getLogModelListNew() throws ClassNotFoundException, ParseException;
     void deleteCollect();
+    int updateMongodbFirstTest(Object WhereValue,Object SetValue) throws ParseException;
 }

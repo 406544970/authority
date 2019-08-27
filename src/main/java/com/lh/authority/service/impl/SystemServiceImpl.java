@@ -110,4 +110,9 @@ public class SystemServiceImpl implements SystemService {
 //        mongodbJar.deleteCollect();
     }
 
+    @Override
+    public int updateMongodbFirstTest(Object WhereValue,Object SetValue) throws ParseException {
+        return mongodbJar.UpdateMongodb(WhereValue,SetValue);
+    }
+
 }
