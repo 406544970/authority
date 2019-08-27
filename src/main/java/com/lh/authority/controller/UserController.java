@@ -14,11 +14,10 @@ import lh.model.ResultVOPageTotal;
 import lh.units.ResultStruct;
 import model.TotalValueClass;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,10 +48,22 @@ public class UserController {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int")
     })
+//    @CrossOrigin(origins = "*")
     @PostMapping("/getUserList")
     public ResultVOPageTotal getUserList(@RequestParam(value = "id", required = false) String id
             , @RequestParam(value = "pageNo", defaultValue = "1") int pageNo
-            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
+            , HttpServletResponse response, HttpServletRequest request) {
+        // 设置：Access-Control-Allow-Origin头，处理Session问题
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        System.out.println(request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("P3P", "CP=CAO PSA OUR");
+        if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
+            response.addHeader("Access-Control-Allow-Methods", "POST,GET,TRACE,OPTIONS");
+            response.addHeader("Access-Control-Allow-Headers", "Content-Type,Origin,Accept");
+            response.addHeader("Access-Control-Max-Age", "120");
+        }
         PageHelper.startPage(pageNo, pageSize);
         List<User> userList = userService.getUserList(id);
         PageInfo pageInfo = new PageInfo<>(userList, pageSize);
@@ -78,6 +89,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "主键", dataType = "String")
     })
+    @CrossOrigin
     @PostMapping("/getUserListTotal")
     public LinkedHashMap<String, TotalValueClass> getUserListTotal(@RequestParam(value = "id", required = false) String id) {
         return null;
