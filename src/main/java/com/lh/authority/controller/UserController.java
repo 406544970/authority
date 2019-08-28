@@ -46,7 +46,6 @@ public class UserController {
             @ApiImplicitParam(name = "pageNo", value = "当前页数", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int")
     })
-//    @CrossOrigin(origins = "*")
     @PostMapping("/getUserList")
     public ResultVOPageTotal getUserList(@RequestParam(value = "id", required = false) String id
             , @RequestParam(value = "pageNo", defaultValue = "1") int pageNo
