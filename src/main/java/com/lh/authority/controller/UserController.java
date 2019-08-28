@@ -16,8 +16,6 @@ import model.TotalValueClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,7 +49,19 @@ public class UserController {
     @PostMapping("/getUserList")
     public ResultVOPageTotal getUserList(@RequestParam(value = "id", required = false) String id
             , @RequestParam(value = "pageNo", defaultValue = "1") int pageNo
-            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize){
+            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
+            ,@RequestParam(value = "useId", required = false) String useId
+            ,@RequestParam(value = "useType", required = false) String useType
+            ,@RequestParam(value = "clientType", required = false) String clientType) {
+        if (useId != null) {
+            System.out.println("useId:" + useId);
+        }
+        if (useType != null) {
+            System.out.println("useType:" + useType);
+        }
+        if (clientType != null) {
+            System.out.println("clientType:" + clientType);
+        }
         PageHelper.startPage(pageNo, pageSize);
         List<User> userList = userService.getUserList(id);
         PageInfo pageInfo = new PageInfo<>(userList, pageSize);
