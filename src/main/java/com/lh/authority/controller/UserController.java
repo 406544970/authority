@@ -16,6 +16,7 @@ import model.TotalValueClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.midi.Soundbank;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,16 +44,22 @@ public class UserController {
     @ApiOperation(value = "得到UserList", notes = "返回UserList，根据useName")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "主键", dataType = "String"),
-            @ApiImplicitParam(name = "pageNo", value = "当前页数", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int")
+            @ApiImplicitParam(name = "page", value = "当前页数", dataType = "int"),
+            @ApiImplicitParam(name = "limit", value = "每页条数", dataType = "int")
     })
     @PostMapping("/getUserList")
     public ResultVOPageTotal getUserList(@RequestParam(value = "id", required = false) String id
-            , @RequestParam(value = "pageNo", defaultValue = "1") int pageNo
-            , @RequestParam(value = "pageSize", defaultValue = "10") int pageSize
+            , @RequestParam(value = "page", defaultValue = "-1") int page
+            , @RequestParam(value = "limit", defaultValue = "-1") int limit
             ,@RequestParam(value = "useId", required = false) String useId
             ,@RequestParam(value = "useType", required = false) String useType
             ,@RequestParam(value = "clientType", required = false) String clientType) {
+        if (page > -1) {
+            System.out.println("page:" + page);
+        }
+        if (limit > -1) {
+            System.out.println("limit:" + limit);
+        }
         if (useId != null) {
             System.out.println("useId:" + useId);
         }
@@ -62,9 +69,9 @@ public class UserController {
         if (clientType != null) {
             System.out.println("clientType:" + clientType);
         }
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(page, limit);
         List<User> userList = userService.getUserList(id);
-        PageInfo pageInfo = new PageInfo<>(userList, pageSize);
+        PageInfo pageInfo = new PageInfo<>(userList, limit);
 
         LinkedHashMap userListTotal = userService.getUserListTotal(id);
         LinkedHashMap<String, TotalValueClass> linkedHashMap = new LinkedHashMap<>();
