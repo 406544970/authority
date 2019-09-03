@@ -10,7 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lh.model.ResultVO;
+import lh.model.ResultVOPage;
 import lh.model.ResultVOPageTotal;
+import lh.model.ResultVOTotal;
 import lh.units.ResultStruct;
 import model.TotalValueClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +88,11 @@ public class UserController {
                 linkedHashMap.put(next.getKey().toString(), totalValueClass);
             }
         }
+        ResultVO success = ResultStruct.success(userList);
+        ResultVOPage resultVOPage = ResultStruct.successPage(userList, pageInfo.getPageNum()
+                , pageInfo.getPageSize(), pageInfo.getTotal());
+        ResultVOTotal resultVOTotal = ResultStruct.successTotal(userList, linkedHashMap);
+
         return ResultStruct.successPageTotal(userList, pageInfo.getPageNum()
                 , pageInfo.getPageSize(), pageInfo.getTotal(), linkedHashMap);
     }
