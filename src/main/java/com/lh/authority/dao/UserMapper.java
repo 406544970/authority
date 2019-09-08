@@ -24,7 +24,15 @@ public interface UserMapper {
      * @return 返回UserList，根据useName
      */
     List<User> getUserList(@Param("id") String id);
+
+    /**
+     * 得到UserList汇总
+     *
+     * @param value 原始SQL语句
+     * @return
+     */
     LinkedHashMap getUserListTotal(@Param("value") String value);
+
     /**
      * 得到UserList2
      *

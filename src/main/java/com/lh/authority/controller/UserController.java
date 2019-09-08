@@ -3,10 +3,12 @@ package com.lh.authority.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.lh.authority.dto.UserDto;
+import com.lh.authority.model.*;
 import com.lh.authority.model.InPutParam.UserInPutPara;
-import com.lh.authority.model.User;
-import com.lh.authority.model.ZoneModel;
 import com.lh.authority.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lh.model.ResultVO;
 import lh.model.ResultVOPageTotal;
+import lh.toolclass.LhGetPinyYinClass;
 import lh.units.ResultStruct;
 import model.TotalValueClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 
 /**
@@ -40,9 +46,64 @@ public class UserController {
     Gson gson;
 
     @PostMapping("/getZone")
-    public ZoneModel[] getZone(){
-        ZoneModel[] list = gson.fromJson("E:\\area.js", ZoneModel[].class);
-        return list;
+    public boolean getZone() throws FileNotFoundException {
+        Gson gson = new Gson();
+        String fileName = "D:\\BaiduNetdiskDownload\\cityTown.json";
+        File file = new File(fileName);
+        if (file.exists()) {
+            JsonParser parser = new JsonParser();
+            FileReader fileReader = new FileReader(fileName);
+            JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
+            int classIndex;
+            int province = 1;
+            for (JsonElement item :
+                    jsonArray) {
+                classIndex = 1;
+                ZoneModel zoneModel = gson.fromJson(item, ZoneModel.class);
+                System.out.print("省(" + province + ") ");
+                System.out.println("classIndex:" + classIndex + "," + "paraId:" + "root" + ":" + zoneModel.getValue() + "," + zoneModel.getLabel()+ "," + LhGetPinyYinClass.getPingYin(zoneModel.getLabel()));
+
+                String cityChildren = gson.toJson(zoneModel.getChildren());
+                if (!cityChildren.equals("null")) {
+                    JsonArray jsonArrayCity = parser.parse(cityChildren).getAsJsonArray();
+                    int cityCounter = 1;
+                    for (JsonElement city :
+                            jsonArrayCity) {
+                        classIndex = 2;
+                        ZoneModelCity zoneModelCity = gson.fromJson(city, ZoneModelCity.class);
+                        System.out.print("  市(" + cityCounter + ") ");
+                        System.out.println("classIndex:" + classIndex + "," + "paraId:" + zoneModel.getValue() + ":" + zoneModelCity.getValue() + "," + zoneModelCity.getLabel() + "," + LhGetPinyYinClass.getPingYin(zoneModelCity.getLabel()));
+
+                        String areaChildren = gson.toJson(zoneModelCity.getChildren());
+                        if (!areaChildren.equals("null")) {
+                            JsonArray jsonArrayArea = parser.parse(areaChildren).getAsJsonArray();
+                            int areaCounter = 1;
+                            for (JsonElement area :
+                                    jsonArrayArea) {
+                                classIndex = 3;
+                                ZoneModelArea zoneModelArea = gson.fromJson(area, ZoneModelArea.class);
+                                System.out.print("    区(" + areaCounter + ") ");
+                                System.out.println("classIndex:" + classIndex + "," + "paraId:" + zoneModelCity.getValue() + ":" + zoneModelArea.getValue() + "," + zoneModelArea.getLabel()+ "," + LhGetPinyYinClass.getPingYin(zoneModelArea.getLabel()));
+
+                                String streetChildren = gson.toJson(zoneModelArea.getChildren());
+                                if (!streetChildren.equals("null")) {
+                                    JsonArray jsonArrayStreet = parser.parse(streetChildren).getAsJsonArray();
+                                    int streetCounter = 1;
+                                    for (JsonElement street :
+                                            jsonArrayStreet) {
+                                        classIndex = 4;
+                                        ZoneModelStreet zoneModelStreet = gson.fromJson(street, ZoneModelStreet.class);
+                                        System.out.print("      街(" + streetCounter + ") ");
+                                        System.out.println("classIndex:" + classIndex + "," + "paraId:" + zoneModelArea.getValue() + ":" + zoneModelStreet.getValue() + "," + zoneModelStreet.getLabel()+ "," + LhGetPinyYinClass.getPingYin(zoneModelStreet.getLabel()));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
     /**
      * 得到UserList

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lh.authority.dao.ZoneMapper">
+
+    <!--加入单条地区信息-->
+    <insert id="insertZoneAlone" parameterType="com.lh.authority.model.ZoneInsertModel">
+        INSERT INTO inf_zone(
+            id
+            ,label
+            ,pinyYin
+            ,classIndex
+            ,paraId
+        )
+        values (
+            #{id,jdbcType=VARCHAR},
+            #{label,jdbcType=VARCHAR},
+            #{pinyYin,jdbcType=VARCHAR},
+            #{classIndex,jdbcType=INTEGER},
+            #{paraId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 注释：生成地区下拉框查询 -->
+    <select id="getZoneList" resultType="com.lh.authority.model.ZoneListModel" parameterType="com.lh.authority.model.InPutParam.ZoneListInPutParam">
+        SELECT
+        id AS value
+        ,label
+        ,pingYin
+        FROM  inf_zone
+        <where>
+            AND classIndex = #{classIndex,jdbcType=INTEGER}
+            AND paraId = #{paraId,jdbcType=VARCHAR}
+            AND auditSign = 1
+        </where>
+        ORDER BY pingYin
+    </select>
+
+</mapper>
