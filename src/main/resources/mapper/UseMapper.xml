@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lh.authority.dao.UseMapper">
+    <!-- 注释：描述 -->
+    <select id="getNewUseListPage" resultType="com.lh.authority.dto.UseDto" parameterType="java.lang.String">
+        SELECT
+        op.id AS id
+        ,op.name AS name
+        ,op.eName AS eName
+        ,opl.roleId AS roleId
+        FROM sys_operator AS op
+        INNER JOIN sys_operatorlinkrole AS opl ON op.id = opl.operatorId
+        <where>
+            AND op.id = #{id,jdbcType=VARCHAR}
+            AND op.stopSign = '1'
+        </where>
+        ORDER BY op.id
+    </select>
+</mapper>
