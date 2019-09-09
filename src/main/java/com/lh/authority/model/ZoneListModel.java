@@ -15,10 +15,10 @@ public class ZoneListModel {
      * 地区名称
      */
     private String label;
-    /**
-     * 拼音码
-     */
-    private String pingYin;
+//    /**
+//     * 拼音码
+//     */
+//    private String pingYin;
 
     public String getValue(){
         return value;
@@ -36,12 +36,12 @@ public class ZoneListModel {
         this.label = label;
     }
 
-    public String getPingYin(){
-        return pingYin;
-    }
-
-    public void setPingYin(String pingYin){
-        this.pingYin = pingYin;
-    }
+//    public String getPingYin(){
+//        return pingYin;
+//    }
+//
+//    public void setPingYin(String pingYin){
+//        this.pingYin = pingYin;
+//    }
 }
 

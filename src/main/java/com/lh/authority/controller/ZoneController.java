@@ -31,7 +31,7 @@ import java.util.List;
  * @editLog
  */
 @RestController
-@RequestMapping("/zoneController")
+@RequestMapping("/user")
 @Api(value = "地区", description = "地区")
 public class ZoneController {
     @Autowired

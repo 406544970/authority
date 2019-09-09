@@ -24,8 +24,8 @@
     <select id="getZoneList" resultType="com.lh.authority.model.ZoneListModel" parameterType="com.lh.authority.model.InPutParam.ZoneListInPutParam">
         SELECT
         id AS value
-        ,label
-        ,pingYin
+        ,CONCAT(label,'(',pingYin,')') as label
+--         ,pingYin
         FROM  inf_zone
         <where>
             AND classIndex = #{classIndex,jdbcType=INTEGER}
