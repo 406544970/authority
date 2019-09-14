@@ -3,6 +3,7 @@ package com.lh.authority.service.impl;
 import com.lh.authority.dao.PerMapper;
 import com.lh.authority.dto.Per1Dto;
 import com.lh.authority.dto.PerDto;
+import com.lh.authority.model.InPutParam.PerInPutParam;
 import com.lh.authority.service.PerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 public class PerServiceImpl implements PerService {
     @Autowired
     PerMapper perMapper;
+
     /**
      * 1.	根据课程名和性别，统计出各科平均成绩、参加人次数、参加人数，并按平均成绩降序排序，性别排序
      *
@@ -29,15 +31,37 @@ public class PerServiceImpl implements PerService {
     public List<PerDto> getPerAchList() {
         return perMapper.getPerAchList();
     }
+
     /**
      * InnerJoin查询
      *
-     * @param name  姓名
+     * @param name 姓名
      * @return 方法说明
      */
     @Override
     public List<Per1Dto> getPerAchList2(String name) {
         return perMapper.getPerAchList2(name);
+    }
+
+    /**
+     * 测试增加员工
+     *
+     * @param perInPutParam com.lh.authority.model.InPutParam.PerInPutParam
+     * @return 员工主键
+     */
+    @Override
+    public int insertIntoPerson(PerInPutParam perInPutParam) {
+        return perMapper.insertIntoPerson(perInPutParam);
+    }
+    /**
+     * 测试增加员工
+     *
+     * @param perInPutParam com.lh.authority.model.InPutParam.PerInPutParam
+     * @return 员工主键
+     */
+    @Override
+    public int insertIntoPersonBeforeCheck(PerInPutParam perInPutParam) {
+        return perMapper.insertIntoPersonBeforeCheck(perInPutParam);
     }
 }
 

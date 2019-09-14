@@ -2,6 +2,7 @@ package com.lh.authority.dao;
 
 import com.lh.authority.dto.Per1Dto;
 import com.lh.authority.dto.PerDto;
+import com.lh.authority.model.InPutParam.PerInPutParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,12 +22,29 @@ public interface PerMapper {
      * @return 方法说明
      */
     List<PerDto> getPerAchList();
+
     /**
      * InnerJoin查询
      *
-     * @param name  姓名
+     * @param name 姓名
      * @return 方法说明
      */
     List<Per1Dto> getPerAchList2(@Param("name") String name);
+
+    /**
+     * 测试增加员工
+     *
+     * @param perInPutParam com.lh.authority.model.InPutParam.PerInPutParam
+     * @return 员工主键
+     */
+    int insertIntoPerson(PerInPutParam perInPutParam);
+
+    /**
+     * 测试增加员工
+     *
+     * @param perInPutParam com.lh.authority.model.InPutParam.PerInPutParam
+     * @return 员工主键
+     */
+    int insertIntoPersonBeforeCheck(PerInPutParam perInPutParam);
 }
 
