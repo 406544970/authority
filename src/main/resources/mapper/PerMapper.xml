@@ -43,4 +43,48 @@
         ORDER BY per.sex,ach.subjectName,ach.achievement DESC
     </select>
 
+    <!-- 注释：测试增加员工 -->
+    <insert id="insertIntoPerson" parameterType="com.lh.authority.model.InPutParam.PerInPutParam">
+        INSERT INTO t_person (
+        id
+        <if test="name != null">
+            ,name
+        </if>
+        <if test="sex != null">
+            ,sex
+        </if>
+        <if test="age != null">
+            ,age
+        </if>
+        <if test="classNo != null">
+            ,classNo
+        </if>
+        )
+        VALUES (
+        #{id,jdbcType=VARCHAR}
+        <if test="name != null">
+            ,#{name,jdbcType=VARCHAR}
+        </if>
+        <if test="sex != null">
+            ,#{sex,jdbcType=INTEGER}
+        </if>
+        <if test="age != null">
+            ,#{age,jdbcType=INTEGER}
+        </if>
+        <if test="classNo != null">
+            ,#{classNo,jdbcType=INTEGER}
+        </if>
+        )
+    </insert>
+
+    <!-- 注释：重复检查功能,测试增加员工 -->
+    <select id="insertIntoPersonBeforeCheck" resultType="java.lang.Integer" parameterType="com.lh.authority.model.InPutParam.PerInPutParam">
+        SELECT COUNT(*) AS COUNTER
+        FROM t_person
+        <where>
+            AND sex = #{sex,jdbcType=INTEGER}
+            <![CDATA[OR age < #{age,jdbcType=INTEGER}]]>
+            AND classNo = #{classNo,jdbcType=INTEGER}
+        </where>
+    </select>
 </mapper>

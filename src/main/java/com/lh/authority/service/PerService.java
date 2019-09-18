@@ -2,6 +2,7 @@ package com.lh.authority.service;
 
 import com.lh.authority.dto.Per1Dto;
 import com.lh.authority.dto.PerDto;
+import com.lh.authority.model.InPutParam.PerInPutParam;
 
 import java.util.List;
 
@@ -25,5 +26,19 @@ public interface PerService {
      * @return 方法说明
      */
     List<Per1Dto> getPerAchList2(String name);
+    /**
+     * 测试增加员工
+     *
+     * @param perInPutParam com.lh.authority.model.InPutParam.PerInPutParam
+     * @return 员工主键
+     */
+    int insertIntoPerson(PerInPutParam perInPutParam);
+    /**
+     * 测试增加员工
+     *
+     * @param perInPutParam com.lh.authority.model.InPutParam.PerInPutParam
+     * @return 员工主键
+     */
+    int insertIntoPersonBeforeCheck(PerInPutParam perInPutParam);
 }
 
