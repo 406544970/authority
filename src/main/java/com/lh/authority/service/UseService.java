@@ -1,6 +1,8 @@
 package com.lh.authority.service;
 
 import com.lh.authority.dto.UseDto;
+import com.lh.authority.model.InPutParam.UseInsertInParam;
+import com.lh.authority.model.UseModel;
 
 import java.util.List;
 
@@ -18,4 +20,27 @@ public interface UseService {
      * @return 返回值说明
      */
     List<UseDto> getNewUseListPage(String id);
+    /**
+     * 增加新用户
+     *
+     * @param useInsertInParam com.lh.authority.model.InPutParam.UseInsertInParam
+     * @return 影响条数
+     */
+    int AddNewUse(UseInsertInParam useInsertInParam);
+
+    /**
+     * 增加新用户
+     *
+     * @param useInsertInParam com.lh.authority.model.InPutParam.UseInsertInParam
+     * @return 影响条数
+     */
+    int AddNewUseBeforeCheck(UseInsertInParam useInsertInParam);
+    /**
+     * 用户登录
+     *
+     * @param mobile 手机号码
+     * @return 结构体
+     */
+    UseModel useLogByNameAndPassWord(String mobile);
+
 }
