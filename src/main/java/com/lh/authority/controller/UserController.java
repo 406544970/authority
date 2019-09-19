@@ -176,21 +176,6 @@ public class UserController {
             , @RequestParam(value = "useId", required = false) String useId
             , @RequestParam(value = "useType", required = false) String useType
             , @RequestParam(value = "clientType", required = false) String clientType) {
-        if (page > -1) {
-            System.out.println("page:" + page);
-        }
-        if (limit > -1) {
-            System.out.println("limit:" + limit);
-        }
-        if (useId != null) {
-            System.out.println("useId:" + useId);
-        }
-        if (useType != null) {
-            System.out.println("useType:" + useType);
-        }
-        if (clientType != null) {
-            System.out.println("clientType:" + clientType);
-        }
 //        PageHelper.startPage(page, limit);
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
