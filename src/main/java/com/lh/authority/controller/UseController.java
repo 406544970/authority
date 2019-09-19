@@ -248,7 +248,7 @@ public class UseController {
         return ResultStruct.success(useModel);
     }
     private String getDoMain(String myOrigin){
-        String newOrigin = myOrigin = myOrigin.replace("https://","")
+        String newOrigin = myOrigin.replace("https://","")
                 .replace("http://","");
         int i = newOrigin.indexOf(":");
         if (i > -1) {
