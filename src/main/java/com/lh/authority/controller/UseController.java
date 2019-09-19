@@ -172,8 +172,6 @@ public class UseController {
     @PostMapping("/useLogByNameAndPassWord")
     public ResultVO useLogByNameAndPassWord(@RequestParam(value = "mobile") String mobile
             , @RequestParam(value = "passWord") String passWord
-//            , @RequestParam(value = "request") HttpServletRequest request
-//            , @RequestParam(value = "response") HttpServletResponse response
     ) {
         return useLogByNameAndPassWordALLPrivate(mobile, passWord, true);
     }
