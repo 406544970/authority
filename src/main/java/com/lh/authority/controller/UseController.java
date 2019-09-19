@@ -256,7 +256,7 @@ public class UseController {
         }
         int index = newOrigin.indexOf(".");
         if (index > -1) {
-            newOrigin = myOrigin.substring(index + 1);
+            newOrigin = newOrigin.substring(index + 1);
         }
         return newOrigin;
     }
