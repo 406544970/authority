@@ -1,12 +1,12 @@
 package com.lh.authority.model;
 
 /**
- * @author ：梁昊，后端工程师：梁昊，前端工程师：陈盼
- * @create 2019-09-05 15:27
+ * @author ：梁昊，后端工程师：梁昊，前端工程师：梁昊
+ * @create 2019-09-21 23:21
  * @function
  * @editLog
  */
-public class DictoryLine {
+public class DictionaryModel {
     /**
      * 主键
      */
@@ -16,9 +16,9 @@ public class DictoryLine {
      */
     private String label;
     /**
-     * 是否选择（0：不选择，1：选择）
+     * 是否选择
      */
-    private Integer defaultSelect;
+    private Boolean defaultSelect;
 
     public String getValue(){
         return value;
@@ -36,11 +36,11 @@ public class DictoryLine {
         this.label = label;
     }
 
-    public Integer getDefaultSelect(){
+    public Boolean getDefaultSelect(){
         return defaultSelect;
     }
 
-    public void setDefaultSelect(Integer defaultSelect){
+    public void setDefaultSelect(Boolean defaultSelect){
         this.defaultSelect = defaultSelect;
     }
 }

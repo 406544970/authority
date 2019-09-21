@@ -1,7 +1,6 @@
 package com.lh.authority.model;
 
 
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

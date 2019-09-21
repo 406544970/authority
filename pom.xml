@@ -94,27 +94,27 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/mybatisHelper.jar</systemPath>
         </dependency>
-        <!--mongodb-->
-        <dependency>
-            <groupId>com.lh</groupId>
-            <artifactId>mymongodb</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/mymongodb.jar</systemPath>
-        </dependency>
-        <!--redis-->
-        <dependency>
-            <groupId>com.lh</groupId>
-            <artifactId>myredis</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/myredis.jar</systemPath>
-        </dependency>
-        <!--redis-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+        <!--&lt;!&ndash;mongodb&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.lh</groupId>-->
+            <!--<artifactId>mymongodb</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${basedir}/lib/mymongodb.jar</systemPath>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;redis&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.lh</groupId>-->
+            <!--<artifactId>myredis</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${basedir}/lib/myredis.jar</systemPath>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;redis&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--</dependency>-->
         <!--gson-->
         <dependency>
             <groupId>com.google.code.gson</groupId>

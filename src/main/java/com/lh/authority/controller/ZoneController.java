@@ -113,11 +113,6 @@ public class ZoneController {
         return zoneService.getZoneList(zoneListInPutParam);
     }
 
-    @PostMapping("/getPY")
-    public String getPY(String text) {
-        return this.getPinyYinMy(text);
-    }
-
     /**
      * 加入单条地区信息，方法ID：SE20190907172421783
      *
@@ -215,13 +210,6 @@ public class ZoneController {
     }
 
     private int addZone(ZoneInsertModel zoneInsertModel) {
-//        int i = list.indexOf(zoneInsertModel.getId());
-//        if (i > -1) {
-//            System.out.println("Value:" + zoneInsertModel.getId());
-//        }
-//        else
-//            list.add(zoneInsertModel.getId());
-//        return 1;
         return zoneService.insertZoneAlone(zoneInsertModel);
     }
 

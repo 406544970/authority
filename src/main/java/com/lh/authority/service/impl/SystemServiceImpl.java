@@ -1,17 +1,13 @@
 package com.lh.authority.service.impl;
 
-import com.lh.authority.dao.OperatorMapper;
 import com.lh.authority.dao.SystemMapper;
 import com.lh.authority.dto.MyPage;
 import com.lh.authority.model.*;
 import com.lh.authority.service.SystemService;
-import com.lh.authority.unit.MongodbNewJar;
 import lh.model.ResultVO;
-import lh.model.ResultVOTotal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -25,12 +21,6 @@ import java.util.List;
 public class SystemServiceImpl implements SystemService {
     @Autowired
     SystemMapper systemMapper;
-
-    @Autowired
-    OperatorMapper operatorMapper;
-
-    @Autowired
-    MongodbNewJar mongodbJar;
 
     /**
      * 得到指定用户子系统权限列表
@@ -55,27 +45,6 @@ public class SystemServiceImpl implements SystemService {
         return systemMapper.selectMyPageAuthorityList(mySystemParaAll);
     }
 
-    /**
-     * 根据用户ID，更新职位
-     *
-     * @param operatorAll
-     * @return 影响行数
-     */
-    @Override
-    public int updateByPrimaryKeyForJobName(OperatorAll operatorAll) {
-        return operatorMapper.updateByPrimaryKeyForJobName(operatorAll);
-    }
-
-    /**
-     * 登录方法
-     *
-     * @param num 工号(用工号作为登录用户名)
-     * @return 返回状态
-     */
-    @Override
-    public OperatorAll useLog(String num) {
-        return operatorMapper.useLog(num);
-    }
 
     @Override
     public boolean insertMongodb() {
@@ -100,19 +69,9 @@ public class SystemServiceImpl implements SystemService {
 //        return mongodbOperator.getLogModelListNew();
         return null;
     }
-    @Override
-    public ResultVOTotal getLogModelListNew() throws ClassNotFoundException, ParseException {
-        return mongodbJar.getLogModelListNew();
-    }
 
     @Override
     public void deleteCollect() {
 //        mongodbJar.deleteCollect();
     }
-
-    @Override
-    public int updateMongodbFirstTest(Object WhereValue,Object SetValue) throws ParseException {
-        return mongodbJar.UpdateMongodb(WhereValue,SetValue);
-    }
-
 }
