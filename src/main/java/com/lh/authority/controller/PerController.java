@@ -1,11 +1,14 @@
 package com.lh.authority.controller;
 
 import com.lh.authority.model.InPutParam.PerInPutParam;
+import com.lh.authority.model.InPutParam.PerUpdateInPutParam;
 import com.lh.authority.service.PerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lh.model.ResultVO;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +70,42 @@ public class PerController {
             return perInPutParam.getId();
         else
             return null;
+    }
+    /**
+     * 更新方法，方法ID：SE20190915004050679
+     *
+     * @param perIdWhere 外键, Where字段
+     * @param subjectName 科目名称
+     * @param subjectNameWhere 科目名称, Where字段
+     * @param achievement 成绩
+     * @return 影响条件
+     */
+    @ApiOperation(value = "更新方法", notes = "影响条件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "perIdWhere", value = "外键", dataType = "String")
+            , @ApiImplicitParam(name = "subjectName", value = "科目名称", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "subjectNameWhere", value = "科目名称", dataType = "String")
+            , @ApiImplicitParam(name = "achievement", value = "成绩", dataType = "int", required = true)
+    })
+    @PostMapping("/updatePerson")
+    public ResultVO updatePerson(@RequestParam(value = "perIdWhere", required = false) String perIdWhere
+            , @RequestParam(value = "subjectName") String subjectName
+            , @RequestParam(value = "subjectNameWhere", required = false) String subjectNameWhere
+            , @RequestParam(value = "achievement") int achievement) {
+        perIdWhere = perIdWhere == null ? perIdWhere : perIdWhere.trim();
+        subjectName = subjectName == null ? subjectName : subjectName.trim();
+        subjectNameWhere = subjectNameWhere == null ? subjectNameWhere : subjectNameWhere.trim();
+
+        PerUpdateInPutParam perUpdateInPutParam = new PerUpdateInPutParam();
+        perUpdateInPutParam.setPerIdWhere(perIdWhere);
+        perUpdateInPutParam.setSubjectName(subjectName);
+        perUpdateInPutParam.setSubjectNameWhere(subjectNameWhere);
+        perUpdateInPutParam.setAchievement(achievement);
+        int updateCount = perService.updatePerson(perUpdateInPutParam);
+        if (updateCount > 0)
+            return ResultStruct.success(updateCount);
+        else
+            return ResultStruct.error("修改失败", ResultVO.class);
     }
 
 }

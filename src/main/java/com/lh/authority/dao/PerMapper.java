@@ -3,6 +3,7 @@ package com.lh.authority.dao;
 import com.lh.authority.dto.Per1Dto;
 import com.lh.authority.dto.PerDto;
 import com.lh.authority.model.InPutParam.PerInPutParam;
+import com.lh.authority.model.InPutParam.PerUpdateInPutParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -46,5 +47,12 @@ public interface PerMapper {
      * @return 员工主键
      */
     int insertIntoPersonBeforeCheck(PerInPutParam perInPutParam);
+    /**
+     * 更新方法
+     *
+     * @param perUpdateInPutParam ghj.model.InPutParam.PerUpdateInPutParam
+     * @return 影响条件
+     */
+    int updatePerson(PerUpdateInPutParam perUpdateInPutParam);
 }
 

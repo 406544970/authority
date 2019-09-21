@@ -3,6 +3,7 @@ package com.lh.authority.service;
 import com.lh.authority.dto.Per1Dto;
 import com.lh.authority.dto.PerDto;
 import com.lh.authority.model.InPutParam.PerInPutParam;
+import com.lh.authority.model.InPutParam.PerUpdateInPutParam;
 
 import java.util.List;
 
@@ -40,5 +41,12 @@ public interface PerService {
      * @return 员工主键
      */
     int insertIntoPersonBeforeCheck(PerInPutParam perInPutParam);
+    /**
+     * 更新方法
+     *
+     * @param perUpdateInPutParam ghj.model.InPutParam.PerUpdateInPutParam
+     * @return 影响条件
+     */
+    int updatePerson(PerUpdateInPutParam perUpdateInPutParam);
 }
 

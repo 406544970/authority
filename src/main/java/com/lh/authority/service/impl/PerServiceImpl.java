@@ -4,6 +4,7 @@ import com.lh.authority.dao.PerMapper;
 import com.lh.authority.dto.Per1Dto;
 import com.lh.authority.dto.PerDto;
 import com.lh.authority.model.InPutParam.PerInPutParam;
+import com.lh.authority.model.InPutParam.PerUpdateInPutParam;
 import com.lh.authority.service.PerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,16 @@ public class PerServiceImpl implements PerService {
     @Override
     public int insertIntoPersonBeforeCheck(PerInPutParam perInPutParam) {
         return perMapper.insertIntoPersonBeforeCheck(perInPutParam);
+    }
+    /**
+     * 更新方法
+     *
+     * @param perUpdateInPutParam ghj.model.InPutParam.PerUpdateInPutParam
+     * @return 影响条件
+     */
+    @Override
+    public int updatePerson (PerUpdateInPutParam perUpdateInPutParam) {
+        return perMapper.updatePerson(perUpdateInPutParam);
     }
 }
 

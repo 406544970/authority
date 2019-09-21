@@ -87,4 +87,46 @@
             AND classNo = #{classNo,jdbcType=INTEGER}
         </where>
     </select>
+
+    <!-- 注释：更新方法 -->
+    <update id="updatePerson" parameterType="com.lh.authority.model.InPutParam.PerUpdateInPutParam">
+        UPDATE t_achievement
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="perId != null">
+                perId = #{perId,jdbcType=VARCHAR},
+            </if>
+            <if test="subjectName != null">
+                subjectName = #{subjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="achievement != null">
+                achievement = #{achievement,jdbcType=INTEGER},
+            </if>
+            <if test="workTime != null">
+                workTime = #{workTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="idWhere != null">
+                AND id = #{idWhere,jdbcType=INTEGER}
+            </if>
+            <if test="perIdWhere != null">
+                AND perId = #{perIdWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="subjectNameWhere != null">
+                AND subjectName = #{subjectNameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="achievementWhere != null">
+                AND achievement = #{achievementWhere,jdbcType=INTEGER}
+            </if>
+            <if test="workTimeWhere != null">
+                AND workTime NOT IN
+                <foreach item = "item" index = "index" collection = "workTimeWhere" open = "(" separator = ", " close = ")" >
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </update>
 </mapper>
