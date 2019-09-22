@@ -34,5 +34,117 @@
         </where>
         ORDER BY pingYin
     </select>
+    <!-- 注释：增加地区 -->
+    <insert id="insertZone" parameterType="com.lh.authority.model.InPutParam.ZoneInsertInParam">
+        INSERT INTO inf_zone (
+               id
+                ,label
+                ,classIndex
+                ,paraId
+                ,auditSign
+        )
+        VALUES (
+               #{id,jdbcType=VARCHAR}
+                ,#{label,jdbcType=VARCHAR}
+                ,#{classIndex,jdbcType=INTEGER}
+                ,#{paraId,jdbcType=VARCHAR}
+                ,#{auditSign,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <!-- 注释：重复检查功能,增加地区 -->
+    <select id="insertZoneBeforeCheck" resultType="java.lang.Integer" parameterType="com.lh.authority.model.InPutParam.ZoneInsertInParam">
+        SELECT COUNT(*) AS COUNTER
+        FROM inf_zone
+        <where>
+            AND label = #{label,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <!-- 注释：删除 -->
+    <delete id="deleteZoneById" parameterType="com.lh.authority.model.InPutParam.ZoneDeleteInParam">
+        DELETE FROM inf_zone
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="label != null">
+                AND label = #{label,jdbcType=VARCHAR}
+            </if>
+            <if test="pinyYin != null">
+                AND pinyYin = #{pinyYin,jdbcType=VARCHAR}
+            </if>
+            <if test="classIndex != null">
+                AND classIndex = #{classIndex,jdbcType=INTEGER}
+            </if>
+            <if test="paraId != null">
+                AND paraId = #{paraId,jdbcType=VARCHAR}
+            </if>
+            <if test="auditSign != null">
+                AND auditSign = #{auditSign,jdbcType=INTEGER}
+            </if>
+        </where>
+    </delete>
+    <!-- 注释：重复检查功能,增加地区 -->
+    <select id="deleteZoneBeforeCheck" resultType="java.lang.Integer" parameterType="com.lh.authority.model.InPutParam.ZoneInsertInParam">
+        SELECT COUNT(*) AS COUNTER
+        FROM inf_zone
+        <where>
+            AND paraId = #{label,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <!-- 注释：修改地区 -->
+    <update id="updateZone" parameterType="com.lh.authority.model.InPutParam.ZoneUpdateInParam">
+        UPDATE inf_zone
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="label != null">
+                label = #{label,jdbcType=VARCHAR},
+            </if>
+            <if test="pinyYin != null">
+                pinyYin = #{pinyYin,jdbcType=VARCHAR},
+            </if>
+            <if test="classIndex != null">
+                classIndex = #{classIndex,jdbcType=INTEGER},
+            </if>
+            <if test="paraId != null">
+                paraId = #{paraId,jdbcType=VARCHAR},
+            </if>
+            <if test="auditSign != null">
+                auditSign = #{auditSign,jdbcType=INTEGER},
+            </if>
+        </set>
+        <where>
+            <if test="idWhere != null">
+                AND id = #{idWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="labelWhere != null">
+                AND label = #{labelWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="pinyYinWhere != null">
+                AND pinyYin = #{pinyYinWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="classIndexWhere != null">
+                AND classIndex = #{classIndexWhere,jdbcType=INTEGER}
+            </if>
+            <if test="paraIdWhere != null">
+                AND paraId = #{paraIdWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="auditSignWhere != null">
+                AND auditSign = #{auditSignWhere,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+    <!-- 注释：根据父ID判断是否有子节点 -->
+    <select id="selectZoneByParaId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+        id
+        FROM  inf_zone
+        <where>
+            AND paraId = #{paraId,jdbcType=VARCHAR}
+        </where>
+        ORDER BY pinyYin
+    </select>
 
 </mapper>

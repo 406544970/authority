@@ -4,15 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.lh.authority.model.InPutParam.ZoneDeleteInParam;
+import com.lh.authority.model.InPutParam.ZoneInsertInParam;
 import com.lh.authority.model.InPutParam.ZoneListInPutParam;
+import com.lh.authority.model.InPutParam.ZoneUpdateInParam;
 import com.lh.authority.model.*;
 import com.lh.authority.service.ZoneService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lh.model.ResultVO;
+import lh.toolclass.LhClass;
 import lh.toolclass.LhGetPinyYinClass;
+import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +41,8 @@ import java.util.List;
 @RequestMapping("/user")
 @Api(value = "地区", description = "地区")
 public class ZoneController {
+    @Value("${server.port}")
+    String port;
     @Autowired
     ZoneService zoneService;
     @Autowired
@@ -211,6 +220,188 @@ public class ZoneController {
 
     private int addZone(ZoneInsertModel zoneInsertModel) {
         return zoneService.insertZoneAlone(zoneInsertModel);
+    }
+
+    /**
+     * 增加地区，方法ID：IN20190922145606679
+     *
+     * @param label      地区名称
+     * @param classIndex 级别
+     * @param paraId     父ID
+     * @param auditSign  审核状态
+     * @return 影响条数
+     */
+    @ApiOperation(value = "增加地区", notes = "影响条数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "label", value = "地区名称", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "classIndex", value = "级别", dataType = "int", required = true)
+            , @ApiImplicitParam(name = "paraId", value = "父ID", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "auditSign", value = "审核状态", dataType = "int", required = true)
+    })
+    @PostMapping("/insertZone")
+    public ResultVO insertZone(@RequestParam(value = "label") String label
+            , @RequestParam(value = "classIndex") int classIndex
+            , @RequestParam(value = "paraId") String paraId
+            , @RequestParam(value = "auditSign", defaultValue = "1") int auditSign) {
+        label = label == null ? label : label.trim();
+        paraId = paraId == null ? paraId : paraId.trim();
+
+        ZoneInsertInParam zoneInsertInParam = new ZoneInsertInParam();
+        String mainKey = LhClass.getMainDataLineKey(Short.valueOf(port));
+        zoneInsertInParam.setId(mainKey);
+        zoneInsertInParam.setLabel(label);
+        zoneInsertInParam.setPinyYin(getPinyYinMy(label));
+        zoneInsertInParam.setClassIndex(classIndex);
+        zoneInsertInParam.setParaId(paraId);
+        zoneInsertInParam.setAuditSign(auditSign);
+        int repetitionCount = zoneService.insertZoneBeforeCheck(zoneInsertInParam);
+        if (repetitionCount > 0)
+            return ResultStruct.error("增加失败，有" + repetitionCount + "条数据已重复！", ResultVO.class);
+        int resultCount = zoneService.insertZone(zoneInsertInParam);
+        if (resultCount > 0)
+            return ResultStruct.success(resultCount);
+        else
+            return ResultStruct.error("增加失败", ResultVO.class);
+    }
+
+    /**
+     * 删除，方法ID：DE20190922150724184
+     *
+     * @param id 主键
+     * @return 影响条数
+     */
+    @ApiOperation(value = "删除", notes = "影响条数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "主键", dataType = "String", required = true)
+    })
+    @PostMapping("/deleteZoneById")
+    public ResultVO deleteZoneById(@RequestParam(value = "id") String id) {
+        id = id == null ? id : id.trim();
+
+        ZoneDeleteInParam zoneDeleteInParam = new ZoneDeleteInParam();
+        zoneDeleteInParam.setId(id);
+        int repetitionCount = zoneService.deleteZoneBeforeCheck(zoneDeleteInParam);
+        if (repetitionCount > 0)
+            return ResultStruct.error("删除失败，有" + repetitionCount + "条子地区数据！", ResultVO.class);
+        int updateCount = deleteZoneByIdPrivate(zoneDeleteInParam);
+        if (updateCount > 0)
+            return ResultStruct.success(updateCount);
+        else
+            return ResultStruct.error("删除失败", ResultVO.class);
+    }
+
+    /**
+     * 删除自己和所有子节点，方法ID：DE20190922150724184
+     *
+     * @param id 主键
+     * @return 影响条数
+     */
+    @ApiOperation(value = "删除", notes = "影响条数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "主键", dataType = "String", required = true)
+    })
+    @PostMapping("/deleteZoneAndSub")
+    public ResultVO deleteZoneAndSub(@RequestParam(value = "id") String id) {
+        return ResultStruct.success(deleteZoneAndSubCount(id));
+    }
+
+    /**
+     * 循环递归删除
+     *
+     * @param id 该节点ID
+     * @return 删除总数量，包括：该节点与子节点
+     */
+    private int deleteZoneAndSubCount(String id) {
+        if (id == null)
+            return 0;
+        id = id.trim();
+        int deleteCount = 0;
+        List<String> list = zoneService.selectZoneByParaId(id);
+        if (list != null) {
+            for (String item :
+                    list) {
+                deleteCount += deleteZoneAndSubCount(item);
+            }
+        }
+        ZoneDeleteInParam zoneDeleteInParam = new ZoneDeleteInParam();
+        zoneDeleteInParam.setId(id);
+        deleteCount += deleteZoneByIdPrivate(zoneDeleteInParam);
+        return deleteCount;
+    }
+
+    private int deleteZoneByIdPrivate(ZoneDeleteInParam zoneDeleteInParam) {
+        int updateCount = zoneService.deleteZoneById(zoneDeleteInParam);
+        return updateCount;
+    }
+
+    /**
+     * 修改地区，方法ID：UP20190922152331967
+     *
+     * @param idWhere    主键, Where字段
+     * @param label      地区名称
+     * @param classIndex 级别
+     * @param paraId     父ID
+     * @param auditSign  审核状态
+     * @return 影响条数
+     */
+    @ApiOperation(value = "修改地区", notes = "影响条数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "idWhere", value = "主键", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "label", value = "地区名称", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "classIndex", value = "级别", dataType = "int", required = true)
+            , @ApiImplicitParam(name = "paraId", value = "父ID", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "auditSign", value = "审核状态", dataType = "int", required = true)
+    })
+    @PostMapping("/updateZone")
+    public ResultVO updateZone(@RequestParam(value = "idWhere") String idWhere
+            , @RequestParam(value = "label") String label
+            , @RequestParam(value = "classIndex") int classIndex
+            , @RequestParam(value = "paraId") String paraId
+            , @RequestParam(value = "auditSign", defaultValue = "1") int auditSign) {
+        idWhere = idWhere == null ? idWhere : idWhere.trim();
+        label = label == null ? label : label.trim();
+        paraId = paraId == null ? paraId : paraId.trim();
+
+        ZoneUpdateInParam zoneUpdateInParam = new ZoneUpdateInParam();
+        zoneUpdateInParam.setIdWhere(idWhere);
+        zoneUpdateInParam.setLabel(label);
+        zoneUpdateInParam.setPinyYin(getPinyYinMy(label));
+        zoneUpdateInParam.setClassIndex(classIndex);
+        zoneUpdateInParam.setParaId(paraId);
+        zoneUpdateInParam.setAuditSign(auditSign);
+        int updateCount = zoneService.updateZone(zoneUpdateInParam);
+        if (updateCount > 0)
+            return ResultStruct.success(updateCount);
+        else
+            return ResultStruct.error("修改失败", ResultVO.class);
+    }
+
+    /**
+     * 修改父ID，方法ID：UP20190922152331967
+     *
+     * @param idWhere 主键, Where字段
+     * @param paraId  父ID
+     * @return 影响条数
+     */
+    @ApiOperation(value = "修改父ID", notes = "影响条数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "idWhere", value = "主键", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "paraId", value = "父ID", dataType = "String", required = true)
+    })
+    @PostMapping("/changeZoneParaId")
+    public ResultVO changeZoneParaId(@RequestParam(value = "idWhere") String idWhere
+            , @RequestParam(value = "paraId") String paraId) {
+        idWhere = idWhere == null ? idWhere : idWhere.trim();
+        paraId = paraId == null ? paraId : paraId.trim();
+
+        ZoneUpdateInParam zoneUpdateInParam = new ZoneUpdateInParam();
+        zoneUpdateInParam.setIdWhere(idWhere);
+        zoneUpdateInParam.setParaId(paraId);
+        int updateCount = zoneService.updateZone(zoneUpdateInParam);
+        if (updateCount > 0)
+            return ResultStruct.success(updateCount);
+        else
+            return ResultStruct.error("修改失败", ResultVO.class);
     }
 
 }
