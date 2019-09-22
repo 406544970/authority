@@ -2,7 +2,9 @@ package com.lh.authority.service.impl;
 
 import com.lh.authority.dao.DictionaryMapper;
 import com.lh.authority.model.DictionaryModel;
+import com.lh.authority.model.InPutParam.DictionaryDeleteInParam;
 import com.lh.authority.model.InPutParam.DictionaryInsertInParam;
+import com.lh.authority.model.InPutParam.DictionaryUpdateInParam;
 import com.lh.authority.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,28 @@ public class DictionaryServiceImpl implements DictionaryService {
     @Override
     public int insertDictionaryBeforeCheck(DictionaryInsertInParam dictionaryInsertInParam) {
         return dictionaryMapper.insertDictionaryBeforeCheck(dictionaryInsertInParam);
+    }
+
+    /**
+     * 修改字典
+     *
+     * @param dictionaryUpdateInParam com.lh.authority.model.InPutParam.DictionaryUpdateInParam
+     * @return 影响条数
+     */
+    @Override
+    public int updateDictionaryByAll (DictionaryUpdateInParam dictionaryUpdateInParam) {
+        return dictionaryMapper.updateDictionaryByAll(dictionaryUpdateInParam);
+    }
+
+    /**
+     * 删除
+     *
+     * @param dictionaryDeleteInParam com.lh.authority.model.InPutParam.DictionaryDeleteInParam
+     * @return 影响条数
+     */
+    @Override
+    public int deleteDictionaryBySignAndId (DictionaryDeleteInParam dictionaryDeleteInParam) {
+        return dictionaryMapper.deleteDictionaryBySignAndId(dictionaryDeleteInParam);
     }
 
 }

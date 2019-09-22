@@ -1,7 +1,9 @@
 package com.lh.authority.dao;
 
 import com.lh.authority.model.DictionaryModel;
+import com.lh.authority.model.InPutParam.DictionaryDeleteInParam;
 import com.lh.authority.model.InPutParam.DictionaryInsertInParam;
+import com.lh.authority.model.InPutParam.DictionaryUpdateInParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,5 +39,18 @@ public interface DictionaryMapper {
      * @return 影响条数
      */
     int insertDictionaryBeforeCheck(DictionaryInsertInParam dictionaryInsertInParam);
-
+    /**
+     * 修改字典
+     *
+     * @param dictionaryUpdateInParam com.lh.authority.model.InPutParam.DictionaryUpdateInParam
+     * @return 影响条数
+     */
+    int updateDictionaryByAll(DictionaryUpdateInParam dictionaryUpdateInParam);
+    /**
+     * 删除
+     *
+     * @param dictionaryDeleteInParam com.lh.authority.model.InPutParam.DictionaryDeleteInParam
+     * @return 影响条数
+     */
+    int deleteDictionaryBySignAndId(DictionaryDeleteInParam dictionaryDeleteInParam);
 }

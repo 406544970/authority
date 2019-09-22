@@ -45,5 +45,82 @@
             AND signName = #{signName,jdbcType=VARCHAR}
         </where>
     </select>
+    <!-- 注释：修改字典 -->
+    <update id="updateDictionaryByAll" parameterType="com.lh.authority.model.InPutParam.DictionaryUpdateInParam">
+        UPDATE inf_dictionary
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="signName != null">
+                signName = #{signName,jdbcType=VARCHAR},
+            </if>
+            <if test="contentName != null">
+                contentName = #{contentName,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultSelect != null">
+                defaultSelect = #{defaultSelect,jdbcType=BIT},
+            </if>
+            <if test="sortNo != null">
+                sortNo = #{sortNo,jdbcType=INTEGER},
+            </if>
+            <if test="stopSign != null">
+                stopSign = #{stopSign,jdbcType=BIT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <where>
+            <if test="idWhere != null">
+                AND id = #{idWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="signNameWhere != null">
+                AND signName = #{signNameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="contentNameWhere != null">
+                AND contentName = #{contentNameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="defaultSelectWhere != null">
+                AND defaultSelect = #{defaultSelectWhere,jdbcType=BIT}
+            </if>
+            <if test="sortNoWhere != null">
+                AND sortNo = #{sortNoWhere,jdbcType=INTEGER}
+            </if>
+            <if test="stopSignWhere != null">
+                AND stopSign = #{stopSignWhere,jdbcType=BIT}
+            </if>
+            <if test="remarkWhere != null">
+                AND remark = #{remarkWhere,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+    <!-- 注释：删除 -->
+    <delete id="deleteDictionaryBySignAndId" parameterType="com.lh.authority.model.InPutParam.DictionaryDeleteInParam">
+        DELETE FROM inf_dictionary
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="signName != null">
+                AND signName = #{signName,jdbcType=VARCHAR}
+            </if>
+            <if test="contentName != null">
+                AND contentName = #{contentName,jdbcType=VARCHAR}
+            </if>
+            <if test="defaultSelect != null">
+                AND defaultSelect = #{defaultSelect,jdbcType=BIT}
+            </if>
+            <if test="sortNo != null">
+                AND sortNo = #{sortNo,jdbcType=INTEGER}
+            </if>
+            <if test="stopSign != null">
+                AND stopSign = #{stopSign,jdbcType=BIT}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
 
 </mapper>
