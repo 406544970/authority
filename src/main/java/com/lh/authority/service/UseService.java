@@ -1,7 +1,8 @@
 package com.lh.authority.service;
 
 import com.lh.authority.dto.UseDto;
-import com.lh.authority.model.InPutParam.UseInsertInParam;
+import com.lh.authority.model.InPutParam.*;
+import com.lh.authority.model.UseMobileAndMailModel;
 import com.lh.authority.model.UseModel;
 
 import java.util.List;
@@ -42,5 +43,40 @@ public interface UseService {
      * @return 结构体
      */
     UseModel useLogByNameAndPassWord(String mobile);
+    /**
+     * 根据标识得到内容
+     *
+     * @param useSelectMobileAndMailInParam 根据标识得到内容
+     * @return 内容
+     */
+    UseMobileAndMailModel getMobileAndMailBy(UseSelectMobileAndMailInParam useSelectMobileAndMailInParam);
+    /**
+     * 修改密码
+     *
+     * @param useUpdateInParam com.lh.authority.model.InPutParam.UseUpdateInParam
+     * @return 结构体
+     */
+    int updatePassWordById(UseUpdateInParam useUpdateInParam);
+    /**
+     * 根据GUID，得到用户ID
+     *
+     * @param guid guid
+     * @return UseID
+     */
+    String getUseIdByGuid(String guid);
+    /**
+     * 增加忘记密码申请
+     *
+     * @param useInsertForGet com.lh.authority.model.InPutParam.UseInsertForGet
+     * @return 是否已增加
+     */
+    int insertForGetPassWordRecord(ZoneUpdateInParam.UseInsertForGet useInsertForGet);
+    /**
+     * 根据UseId，删除忘记密码记录
+     *
+     * @param useDeletePassWordInParam com.lh.authority.model.InPutParam.UseDeletePassWordInParam
+     * @return 影响条件
+     */
+    int deletePassWordRecordByUseId(UseDeletePassWordInParam useDeletePassWordInParam);
 
 }

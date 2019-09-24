@@ -25,14 +25,15 @@ public class Operator {
         this.operName = operName;
     }
 
-    public String getDepartId() {
-        return departId;
-    }
-
-    public void setDepartId(String departId) {
-        this.departId = departId;
-    }
 
     private String operName;
-    private String departId;
+    private String deptId;
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
 }
