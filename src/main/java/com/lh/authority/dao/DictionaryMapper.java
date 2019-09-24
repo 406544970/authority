@@ -53,4 +53,11 @@ public interface DictionaryMapper {
      * @return 影响条数
      */
     int deleteDictionaryBySignAndId(DictionaryDeleteInParam dictionaryDeleteInParam);
+    /**
+     * 根据标识得到内容
+     *
+     * @param id 主键
+     * @return 内容
+     */
+    String selectSignById(@Param("id") String id);
 }

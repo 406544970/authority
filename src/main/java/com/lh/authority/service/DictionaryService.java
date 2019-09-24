@@ -15,6 +15,13 @@ import java.util.List;
  */
 public interface DictionaryService {
     /**
+     * 根据标识得到内容
+     *
+     * @param id 主键
+     * @return 内容
+     */
+    String selectSignById(String id);
+    /**
      * 返回字典列表
      *
      * @param signName 标识

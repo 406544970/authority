@@ -232,5 +232,20 @@ public class DictionaryController {
 
         return updateCount;
     }
+    /**
+     * 根据标识得到内容，方法ID：SE20190924091144625
+     *
+     * @param id 表inf_dictionaryName,字段名id:主键
+     * @return 内容
+     */
+    @ApiOperation(value = "根据标识得到内容", notes = "内容")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "主键", dataType = "String", required = true)
+    })
+    @PostMapping("/selectSignById")
+    public ResultVO selectSignById(@RequestParam(value = "id") String id) {
+        return ResultStruct.success(dictionaryService.selectSignById(id));
+    }
+
 
 }

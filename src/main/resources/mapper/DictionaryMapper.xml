@@ -122,5 +122,14 @@
             </if>
         </where>
     </delete>
+    <!-- 注释：根据标识得到内容 -->
+    <select id="selectSignById" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+        dictionaryPageName
+        FROM  inf_dictionaryName
+        <where>
+            AND id = #{id,jdbcType=VARCHAR}
+        </where>
+    </select>
 
 </mapper>

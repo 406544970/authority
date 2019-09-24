@@ -22,6 +22,18 @@ import java.util.List;
 public class DictionaryServiceImpl implements DictionaryService {
     @Autowired
     DictionaryMapper dictionaryMapper;
+
+    /**
+     * 根据标识得到内容
+     *
+     * @param id 主键
+     * @return 内容
+     */
+    @Override
+    public String selectSignById(String id) {
+        return dictionaryMapper.selectSignById(id);
+    }
+
     /**
      * 返回字典列表
      *
