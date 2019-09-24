@@ -7,7 +7,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @EnableEurekaClient
 @SpringBootApplication
-@RefreshScope
 public class AuthorityApplication {
 
     public static void main(String[] args) {
