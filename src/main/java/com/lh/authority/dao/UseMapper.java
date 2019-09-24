@@ -74,7 +74,7 @@ public interface UseMapper {
      * @param useInsertForGet com.lh.authority.model.InPutParam.UseInsertForGet
      * @return 是否已增加
      */
-    int insertForGetPassWordRecord(ZoneUpdateInParam.UseInsertForGet useInsertForGet);
+    int insertForGetPassWordRecord(UseInsertForGet useInsertForGet);
     /**
      * 根据UseId，删除忘记密码记录
      *

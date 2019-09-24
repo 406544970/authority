@@ -67,7 +67,7 @@
         as url
         ,ap.picPath as formPic
         ,ap.remark as formRemark
-        FROM sys_operator as oper
+        FROM sys_userinfo as oper
         INNER JOIN sys_operatorlinkrole as oplr on oper.id = oplr.operatorId
         INNER JOIN sys_rolelinkpower as rlp on oplr.roleId = rlp.roleId
         INNER JOIN sys_grouplinkpower as glp on rlp.allPowerId = glp.formAllPowerID

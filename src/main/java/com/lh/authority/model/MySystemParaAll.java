@@ -55,4 +55,5 @@ public class MySystemParaAll extends MySystemPara {
     public void setSystemName(String systemName) {
         this.systemName = systemName;
     }
+
 }

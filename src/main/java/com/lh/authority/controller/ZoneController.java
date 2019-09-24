@@ -20,6 +20,7 @@ import lh.toolclass.LhGetPinyYinClass;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,7 @@ import java.util.List;
  * @function
  * @editLog
  */
+@EnableEurekaClient
 @RestController
 @RequestMapping("/user")
 @Api(value = "地区", description = "地区")

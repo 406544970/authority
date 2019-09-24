@@ -17,6 +17,7 @@ import lh.toolclass.LhClass;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +38,7 @@ import java.util.UUID;
  * @function
  * @editLog
  */
+@EnableEurekaClient
 @RestController
 @RequestMapping("/useController")
 @Api(value = "测试代码生成器", description = "代码生成器描述")
@@ -378,7 +380,7 @@ public class UseController {
         time += 1000 * 3600 * 24;//在当前系统时间的基础上往后增加24小时
         Date endDate = new Date(time);
 
-        ZoneUpdateInParam.UseInsertForGet useInsertForGet = new ZoneUpdateInParam.UseInsertForGet();
+        UseInsertForGet useInsertForGet = new UseInsertForGet();
         useInsertForGet.setId(id);
         useInsertForGet.setUseId(useId);
         useInsertForGet.setEndDate(endDate);

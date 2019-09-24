@@ -102,7 +102,7 @@ public class UseServiceImpl implements UseService {
      * @return 是否已增加
      */
     @Override
-    public int insertForGetPassWordRecord (ZoneUpdateInParam.UseInsertForGet useInsertForGet) {
+    public int insertForGetPassWordRecord (UseInsertForGet useInsertForGet) {
         return useMapper.insertForGetPassWordRecord(useInsertForGet);
     }
 
