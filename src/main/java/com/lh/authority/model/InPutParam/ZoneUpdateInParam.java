@@ -26,11 +26,11 @@ public class ZoneUpdateInParam {
     /**
      * 拼音码
      */
-    private String pinyYin;
+    private String pinYin;
     /**
      * 拼音码, Where字段
      */
-    private String pinyYinWhere;
+    private String pinYinWhere;
     /**
      * 级别
      */
@@ -82,19 +82,6 @@ public class ZoneUpdateInParam {
         this.labelWhere = labelWhere;
     }
 
-    public String getPinyYin(){
-        return pinyYin;
-    }
-    public String getPinyYinWhere(){
-        return pinyYinWhere;
-    }
-    public void setPinyYin(String pinyYin){
-        this.pinyYin = pinyYin;
-    }
-    public void setPinyYinWhere(String pinyYinWhere){
-        this.pinyYinWhere = pinyYinWhere;
-    }
-
     public Integer getClassIndex(){
         return classIndex;
     }
@@ -132,5 +119,21 @@ public class ZoneUpdateInParam {
     }
     public void setAuditSignWhere(Integer auditSignWhere){
         this.auditSignWhere = auditSignWhere;
+    }
+
+    public String getPinYinWhere() {
+        return pinYinWhere;
+    }
+
+    public void setPinYinWhere(String pinYinWhere) {
+        this.pinYinWhere = pinYinWhere;
+    }
+
+    public String getPinYin() {
+        return pinYin;
+    }
+
+    public void setPinYin(String pinYin) {
+        this.pinYin = pinYin;
     }
 }

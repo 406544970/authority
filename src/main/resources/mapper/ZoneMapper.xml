@@ -7,14 +7,14 @@
         INSERT INTO inf_zone(
             id
             ,label
-            ,pinyYin
+            ,pinYin
             ,classIndex
             ,paraId
         )
         values (
             #{id,jdbcType=VARCHAR},
             #{label,jdbcType=VARCHAR},
-            #{pinyYin,jdbcType=VARCHAR},
+            #{pinYin,jdbcType=VARCHAR},
             #{classIndex,jdbcType=INTEGER},
             #{paraId,jdbcType=VARCHAR}
         )
@@ -25,14 +25,14 @@
         SELECT
         id AS value
         ,label
-        ,CONCAT(label,'(',pingYin,')') as pingYin
+        ,CONCAT(label,'(',pinYin,')') as pinYin
         FROM  inf_zone
         <where>
             AND classIndex = #{classIndex,jdbcType=INTEGER}
             AND paraId = #{paraId,jdbcType=VARCHAR}
             AND auditSign = 1
         </where>
-        ORDER BY pingYin
+        ORDER BY pinYin
     </select>
     <!-- 注释：增加地区 -->
     <insert id="insertZone" parameterType="com.lh.authority.model.InPutParam.ZoneInsertInParam">
@@ -70,8 +70,8 @@
             <if test="label != null">
                 AND label = #{label,jdbcType=VARCHAR}
             </if>
-            <if test="pinyYin != null">
-                AND pinyYin = #{pinyYin,jdbcType=VARCHAR}
+            <if test="pinYin != null">
+                AND pinYin = #{pinYin,jdbcType=VARCHAR}
             </if>
             <if test="classIndex != null">
                 AND classIndex = #{classIndex,jdbcType=INTEGER}
@@ -102,8 +102,8 @@
             <if test="label != null">
                 label = #{label,jdbcType=VARCHAR},
             </if>
-            <if test="pinyYin != null">
-                pinyYin = #{pinyYin,jdbcType=VARCHAR},
+            <if test="pinYin != null">
+                pinYin = #{pinYin,jdbcType=VARCHAR},
             </if>
             <if test="classIndex != null">
                 classIndex = #{classIndex,jdbcType=INTEGER},
@@ -122,8 +122,8 @@
             <if test="labelWhere != null">
                 AND label = #{labelWhere,jdbcType=VARCHAR}
             </if>
-            <if test="pinyYinWhere != null">
-                AND pinyYin = #{pinyYinWhere,jdbcType=VARCHAR}
+            <if test="pinYinWhere != null">
+                AND pinYin = #{pinYinWhere,jdbcType=VARCHAR}
             </if>
             <if test="classIndexWhere != null">
                 AND classIndex = #{classIndexWhere,jdbcType=INTEGER}
@@ -144,7 +144,7 @@
         <where>
             AND paraId = #{paraId,jdbcType=VARCHAR}
         </where>
-        ORDER BY pinyYin
+        ORDER BY pinYin
     </select>
 
 </mapper>

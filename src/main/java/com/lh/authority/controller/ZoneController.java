@@ -19,7 +19,6 @@ import lh.toolclass.LhClass;
 import lh.toolclass.LhGetPinyYinClass;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +39,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Api(value = "地区", description = "地区")
-public class ZoneController {
-    @Value("${server.port}")
-    String port;
+public class ZoneController extends GetPropertiesClass{
     @Autowired
     ZoneService zoneService;
     @Autowired
@@ -144,7 +141,7 @@ public class ZoneController {
                     jsonArray) {
                 classIndex = 1;
                 ZoneModel zoneModel = gson.fromJson(item, ZoneModel.class);
-                ZoneInsertModel zoneInsertModel = makeObject(zoneModel.getValue(), zoneModel.getLabel(), getPinyYinMy(zoneModel.getLabel()), classIndex, "root");
+                ZoneInsertModel zoneInsertModel = makeObject(zoneModel.getValue(), zoneModel.getLabel(), getpinYinMy(zoneModel.getLabel()), classIndex, "root");
                 i += addZone(zoneInsertModel);
 
                 String cityChildren = gson.toJson(zoneModel.getChildren());
@@ -154,7 +151,7 @@ public class ZoneController {
                             jsonArrayCity) {
                         classIndex = 2;
                         ZoneModelCity zoneModelCity = gson.fromJson(city, ZoneModelCity.class);
-                        ZoneInsertModel zoneInsertModel1 = makeObject(zoneModelCity.getValue(), zoneModelCity.getLabel(), getPinyYinMy(zoneModelCity.getLabel()), classIndex, zoneModel.getValue());
+                        ZoneInsertModel zoneInsertModel1 = makeObject(zoneModelCity.getValue(), zoneModelCity.getLabel(), getpinYinMy(zoneModelCity.getLabel()), classIndex, zoneModel.getValue());
                         i += addZone(zoneInsertModel1);
 
                         String areaChildren = gson.toJson(zoneModelCity.getChildren());
@@ -164,7 +161,7 @@ public class ZoneController {
                                     jsonArrayArea) {
                                 classIndex = 3;
                                 ZoneModelArea zoneModelArea = gson.fromJson(area, ZoneModelArea.class);
-                                ZoneInsertModel zoneInsertModel2 = makeObject(zoneModelArea.getValue(), zoneModelArea.getLabel(), getPinyYinMy(zoneModelArea.getLabel()), classIndex, zoneModelCity.getValue());
+                                ZoneInsertModel zoneInsertModel2 = makeObject(zoneModelArea.getValue(), zoneModelArea.getLabel(), getpinYinMy(zoneModelArea.getLabel()), classIndex, zoneModelCity.getValue());
                                 i += addZone(zoneInsertModel2);
 
                                 String streetChildren = gson.toJson(zoneModelArea.getChildren());
@@ -174,7 +171,7 @@ public class ZoneController {
                                             jsonArrayStreet) {
                                         classIndex = 4;
                                         ZoneModelStreet zoneModelStreet = gson.fromJson(street, ZoneModelStreet.class);
-                                        ZoneInsertModel zoneInsertModel3 = makeObject(zoneModelStreet.getValue(), zoneModelStreet.getLabel(), getPinyYinMy(zoneModelStreet.getLabel()), classIndex, zoneModelArea.getValue());
+                                        ZoneInsertModel zoneInsertModel3 = makeObject(zoneModelStreet.getValue(), zoneModelStreet.getLabel(), getpinYinMy(zoneModelStreet.getLabel()), classIndex, zoneModelArea.getValue());
                                         i += addZone(zoneInsertModel3);
                                     }
                                 }
@@ -187,7 +184,7 @@ public class ZoneController {
         return i;
     }
 
-    private String getPinyYinMy(String text) {
+    private String getpinYinMy(String text) {
         if (text != null) {
             text = text.replace("省", "")
                     .replace("市", "")
@@ -203,16 +200,16 @@ public class ZoneController {
             return null;
     }
 
-    private ZoneInsertModel makeObject(String id, String label, String pinyYin, int classIndex, String paraId) {
+    private ZoneInsertModel makeObject(String id, String label, String pinYin, int classIndex, String paraId) {
         id = id == null ? id : id.trim();
         label = label == null ? label : label.trim();
-        pinyYin = pinyYin == null ? pinyYin : pinyYin.trim();
+        pinYin = pinYin == null ? pinYin : pinYin.trim();
         paraId = paraId == null ? paraId : paraId.trim();
 
         ZoneInsertModel zoneInsertModel = new ZoneInsertModel();
         zoneInsertModel.setId(id);
         zoneInsertModel.setLabel(label);
-        zoneInsertModel.setPinyYin(pinyYin);
+        zoneInsertModel.setPinYin(pinYin);
         zoneInsertModel.setClassIndex(classIndex);
         zoneInsertModel.setParaId(paraId);
         return zoneInsertModel;
@@ -247,10 +244,10 @@ public class ZoneController {
         paraId = paraId == null ? paraId : paraId.trim();
 
         ZoneInsertInParam zoneInsertInParam = new ZoneInsertInParam();
-        String mainKey = LhClass.getMainDataLineKey(Short.valueOf(port));
+        String mainKey = LhClass.getMainDataLineKey(Short.valueOf(super.getPort()));
         zoneInsertInParam.setId(mainKey);
         zoneInsertInParam.setLabel(label);
-        zoneInsertInParam.setPinyYin(getPinyYinMy(label));
+        zoneInsertInParam.setPinYin(getpinYinMy(label));
         zoneInsertInParam.setClassIndex(classIndex);
         zoneInsertInParam.setParaId(paraId);
         zoneInsertInParam.setAuditSign(auditSign);
@@ -365,7 +362,7 @@ public class ZoneController {
         ZoneUpdateInParam zoneUpdateInParam = new ZoneUpdateInParam();
         zoneUpdateInParam.setIdWhere(idWhere);
         zoneUpdateInParam.setLabel(label);
-        zoneUpdateInParam.setPinyYin(getPinyYinMy(label));
+        zoneUpdateInParam.setPinYin(getpinYinMy(label));
         zoneUpdateInParam.setClassIndex(classIndex);
         zoneUpdateInParam.setParaId(paraId);
         zoneUpdateInParam.setAuditSign(auditSign);

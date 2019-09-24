@@ -23,25 +23,10 @@ import static com.netflix.discovery.DiscoveryManager.getInstance;
  */
 @RestController
 @EnableEurekaClient
-@RequestMapping(value = "/universal")     // 通过这里配置使下面的映射都在/users下，可去除
+@RequestMapping("/universal")     // 通过这里配置使下面的映射都在/users下，可去除
 @Api(value = "通用控制层", description = "专用于梁昊所要求的通用方法")
 @RefreshScope
-public class UniversalController {
-    public UniversalController() {
-        super();
-    }
-
-    @Value("${eureka.instance.metadata-map.version}")
-    private String version;
-
-    @Value("${server.port}")
-    String port;
-
-    @Value("${spring.application.name}")
-    private String springApplicationName;
-
-    @Value("${liangHaoSign}")
-    private String liangHaoSign;
+public class UniversalController extends GetPropertiesClass{
 
     @ApiOperation(value = "测试Feign熔断时间", notes = "hi")
     @ApiImplicitParams({
@@ -63,7 +48,7 @@ public class UniversalController {
     @ApiOperation(value = "得到当前版本号", notes = "返回：当前版本号")
     @PostMapping("/myVersion")
     public String getVersion() {
-        return String.format("My port is : %s; My version is : %s", port, version);
+        return String.format("My port is : %s; My version is : %s", super.getPort(), super.getVersion());
     }
 
     /**
@@ -72,7 +57,7 @@ public class UniversalController {
     @ApiOperation(value = "得到当前端口号", notes = "返回：当前端口号")
     @PostMapping("/myPort")
     public String myPort() {
-        return String.format("I am is port:%s", port);
+        return String.format("I am is port:%s", super.getPort());
     }
 
     /**
@@ -82,7 +67,7 @@ public class UniversalController {
     @GetMapping("/downLine")
     public String downLine() {
         getInstance().shutdownComponent();
-        return String.format("ApplicationName\"%s\"(Port:%s) is downLine.", this.springApplicationName, this.port);
+        return String.format("ApplicationName\"%s\"(Port:%s) is downLine.",super.getApplicationName(), super.getPort());
     }
 
     /**
@@ -91,6 +76,6 @@ public class UniversalController {
     @ApiOperation(value = "得到参数标识", notes = "返回：参数标识")
     @PostMapping("/GetParamSign")
     public String GetParamSign() {
-        return String.format("liangHaoSign:\"%s\"", liangHaoSign);
+        return String.format("liangHaoSign:\"%s\"", super.getLiangHaoSign());
     }
 }

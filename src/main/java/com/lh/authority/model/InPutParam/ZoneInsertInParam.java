@@ -18,7 +18,7 @@ public class ZoneInsertInParam {
     /**
      * 拼音码
      */
-    private String pinyYin;
+    private String pinYin;
     /**
      * 级别
      */
@@ -48,14 +48,6 @@ public class ZoneInsertInParam {
         this.label = label;
     }
 
-    public String getPinyYin(){
-        return pinyYin;
-    }
-
-    public void setPinyYin(String pinyYin){
-        this.pinyYin = pinyYin;
-    }
-
     public Integer getClassIndex(){
         return classIndex;
     }
@@ -78,5 +70,13 @@ public class ZoneInsertInParam {
 
     public void setAuditSign(Integer auditSign){
         this.auditSign = auditSign;
+    }
+
+    public String getPinYin() {
+        return pinYin;
+    }
+
+    public void setPinYin(String pinYin) {
+        this.pinYin = pinYin;
     }
 }

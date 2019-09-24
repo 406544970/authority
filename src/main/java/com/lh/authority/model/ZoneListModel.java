@@ -18,7 +18,7 @@ public class ZoneListModel {
     /**
      * 拼音码
      */
-    private String pingYin;//北京市（bj）
+    private String pinYin;//北京市（bj）
 
     public String getValue(){
         return value;
@@ -36,12 +36,12 @@ public class ZoneListModel {
         this.label = label;
     }
 
-    public String getPingYin(){
-        return pingYin;
+    public String getPinYin() {
+        return pinYin;
     }
 
-    public void setPingYin(String pingYin){
-        this.pingYin = pingYin;
+    public void setPinYin(String pinYin) {
+        this.pinYin = pinYin;
     }
 }
 

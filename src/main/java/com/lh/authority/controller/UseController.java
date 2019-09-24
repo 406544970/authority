@@ -35,12 +35,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/useController")
 @Api(value = "测试代码生成器", description = "代码生成器描述")
-public class UseController {
+public class UseController extends GetPropertiesClass{
     @Autowired
     UseService useService;
-
-    @Value("${server.port}")
-    private String port;
 
     /**
      * 描述，方法ID：SE20190909144116865
@@ -104,8 +101,8 @@ public class UseController {
             , @ApiImplicitParam(name = "userType", value = "用户类型", dataType = "String")
             , @ApiImplicitParam(name = "remark", value = "备注", dataType = "String")
     })
-    @PostMapping("/AddNewUse")
-    public int AddNewUse(@RequestParam(value = "deptId") String deptId
+    @PostMapping("/addNewUse")
+    public int addNewUse(@RequestParam(value = "deptId") String deptId
             , @RequestParam(value = "username") String username
             , @RequestParam(value = "password") String password
             , @RequestParam(value = "name") String name
@@ -135,7 +132,7 @@ public class UseController {
         remark = remark == null ? remark : remark.trim();
 
         UseInsertInParam useInsertInParam = new UseInsertInParam();
-        String mainKey = LhClass.getOrderMainLenKey(Short.valueOf(port));//这里引用架包中的生成主键方法
+        String mainKey = LhClass.getOrderMainLenKey(Short.valueOf(super.getPort()));//这里引用架包中的生成主键方法
         useInsertInParam.setId(mainKey);
         useInsertInParam.setDeptId(deptId);
         useInsertInParam.setUsername(username);
