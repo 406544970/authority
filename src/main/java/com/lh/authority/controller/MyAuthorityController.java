@@ -23,7 +23,7 @@ import java.util.List;
  */
 @EnableEurekaClient
 @RestController
-@RequestMapping(value = "/authority")
+@RequestMapping("/authority")
 @Api(value = "权限控制层", description = "权限控制粘子层")
 public class MyAuthorityController {
     @Autowired

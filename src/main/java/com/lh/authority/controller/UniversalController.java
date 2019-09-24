@@ -23,7 +23,7 @@ import static com.netflix.discovery.DiscoveryManager.getInstance;
  */
 @EnableEurekaClient
 @RestController
-@RequestMapping(value = "/universal")     // 通过这里配置使下面的映射都在/users下，可去除
+@RequestMapping("/universal")     // 通过这里配置使下面的映射都在/users下，可去除
 @Api(value = "通用控制层", description = "专用于梁昊所要求的通用方法")
 @RefreshScope
 public class UniversalController {
@@ -35,7 +35,7 @@ public class UniversalController {
     private String version;
 
     @Value("${server.port}")
-    String port;
+    private String port;
 
     @Value("${spring.application.name}")
     private String springApplicationName;

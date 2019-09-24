@@ -44,7 +44,7 @@ import java.util.List;
 @Api(value = "地区", description = "地区")
 public class ZoneController {
     @Value("${server.port}")
-    String port;
+    private String port;
     @Autowired
     ZoneService zoneService;
     @Autowired
