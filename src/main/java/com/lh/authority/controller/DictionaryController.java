@@ -15,6 +15,7 @@ import lh.model.ResultVO;
 import lh.model.ResultVOPage;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,7 @@ import java.util.List;
  * @function
  * @editLog
  */
+@EnableEurekaClient
 @RestController
 @RequestMapping("/dictionaryController")
 @Api(value = "数据字典", description = "未与Mongodb同步")

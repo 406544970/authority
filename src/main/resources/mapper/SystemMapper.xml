@@ -15,7 +15,7 @@
         <association property="operator" column="id" javaType="com.lh.authority.model.Operator">
             <id column="operatorId" property="operatorId" jdbcType="VARCHAR"/>
             <result column="operName" property="operName" jdbcType="VARCHAR"/>
-            <result column="departId" property="departId" jdbcType="VARCHAR"/>
+            <result column="deptId" property="deptId" jdbcType="VARCHAR"/>
         </association>
         <collection property="groups" ofType="com.lh.authority.model.Group">
             <id column="groupName" property="groupName" jdbcType="VARCHAR"/>
@@ -56,7 +56,8 @@
         sn.systemName
         ,Case WHEN sn.hellowWebName is not null  AND LENGTH(ap.paraStr) > 0 then sn.hellowWebName else 'Default.html' end helloPage
         ,sn.picPath
-        ,oper.name as operName,oper.departId
+        ,oper.name as operName
+        ,oper.deptId
         ,gn.groupName,gn.isExpand as expandSign
         ,ap.caption
         ,case WHEN ap.paraStr is not null AND LENGTH(ap.paraStr) > 0 then
@@ -66,7 +67,7 @@
         as url
         ,ap.picPath as formPic
         ,ap.remark as formRemark
-        FROM sys_operator as oper
+        FROM sys_userinfo as oper
         INNER JOIN sys_operatorlinkrole as oplr on oper.id = oplr.operatorId
         INNER JOIN sys_rolelinkpower as rlp on oplr.roleId = rlp.roleId
         INNER JOIN sys_grouplinkpower as glp on rlp.allPowerId = glp.formAllPowerID

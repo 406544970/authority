@@ -3,7 +3,8 @@ package com.lh.authority.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lh.authority.dto.UseDto;
-import com.lh.authority.model.InPutParam.UseInsertInParam;
+import com.lh.authority.model.InPutParam.*;
+import com.lh.authority.model.UseMobileAndMailModel;
 import com.lh.authority.model.UseModel;
 import com.lh.authority.service.UseService;
 import io.swagger.annotations.Api;
@@ -16,13 +17,18 @@ import lh.toolclass.LhClass;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +38,7 @@ import java.util.UUID;
  * @function
  * @editLog
  */
+@EnableEurekaClient
 @RestController
 @RequestMapping("/useController")
 @Api(value = "测试代码生成器", description = "代码生成器描述")
@@ -210,7 +217,7 @@ public class UseController extends GetPropertiesClass{
             final String UseId = "useId";
             final String UseType = "useType";
             final String ClientType = "clientType";
-            final int seconds= 3600 * 2;
+            final int seconds = 3600 * 2;
             HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
             HttpServletResponse response = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getResponse();
             String myOrigin = request.getHeader("origin");
@@ -242,17 +249,147 @@ public class UseController extends GetPropertiesClass{
         }
         return ResultStruct.success(useModel);
     }
-    private String getDoMain(String myOrigin){
-        String newOrigin = myOrigin.replace("https://","")
-                .replace("http://","");
+
+    private String getDoMain(String myOrigin) {
+        String newOrigin = myOrigin.replace("https://", "")
+                .replace("http://", "");
         int i = newOrigin.indexOf(":");
         if (i > -1) {
-            newOrigin = newOrigin.substring(0,i);
+            newOrigin = newOrigin.substring(0, i);
         }
         int index = newOrigin.indexOf(".");
         if (index > -1) {
             newOrigin = newOrigin.substring(index + 1);
         }
         return newOrigin;
+    }
+
+    /**
+     * 根据标识得到内容，方法ID：SE20190924113129544
+     *
+     * @param username 表sys_userinfo,字段名username:用户名（登录用户名）
+     * @param mobile   表sys_userinfo,字段名mobile:手机号码
+     * @param email    表sys_userinfo,字段名email:电子邮箱
+     * @return 根据登录帐号或手机号或邮件
+     */
+    @ApiOperation(value = "根据标识得到内容", notes = "根据登录帐号或手机号或邮件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名（登录用户名）", dataType = "String"),
+            @ApiImplicitParam(name = "mobile", value = "手机号码", dataType = "String"),
+            @ApiImplicitParam(name = "email", value = "电子邮箱", dataType = "String")
+    })
+    @PostMapping("/getMobileAndMailBy")
+    public ResultVO getMobileAndMailBy(@RequestParam(value = "username", required = false) String username
+            , @RequestParam(value = "mobile", required = false) String mobile
+            , @RequestParam(value = "email", required = false) String email) {
+        username = username == null ? username : username.trim();
+        mobile = mobile == null ? mobile : mobile.trim();
+        email = email == null ? email : email.trim();
+        if (username == null && mobile == null && email == null) {
+            return ResultStruct.error("请输入登录帐号、手机或邮件！", ResultVO.class);
+        }
+        UseSelectMobileAndMailInParam useSelectMobileAndMailInParam = new UseSelectMobileAndMailInParam();
+        useSelectMobileAndMailInParam.setUsername(username);
+        useSelectMobileAndMailInParam.setMobile(mobile);
+        useSelectMobileAndMailInParam.setEmail(email);
+        UseMobileAndMailModel mobileAndMailBy = useService.getMobileAndMailBy(useSelectMobileAndMailInParam);
+        if (mobileAndMailBy == null) {
+            return ResultStruct.error("无此用户！", ResultVO.class);
+        }
+        if (mobileAndMailBy.getStopSign()) {
+            return ResultStruct.error("此用户已停用！", ResultVO.class);
+        }
+
+        return ResultStruct.success(mobileAndMailBy);
+    }
+
+    /**
+     * 修改密码，方法ID：SE20190924121603404
+     *
+     * @param idWhere  逻辑主键, Where字段
+     * @param password 密码
+     * @return 结构体
+     */
+    @ApiOperation(value = "修改密码", notes = "结构体")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "idWhere", value = "逻辑主键", dataType = "String", required = true)
+            , @ApiImplicitParam(name = "password", value = "密码", dataType = "String", required = true)
+    })
+    @PostMapping("/updatePassWordById")
+    public ResultVO updatePassWordById(@RequestParam(value = "idWhere") String idWhere
+            , @RequestParam(value = "password") String password) {
+        idWhere = idWhere == null ? idWhere : idWhere.trim();
+        password = password == null ? password : password.trim();
+        if (password.length() > 40) {
+            return ResultStruct.error("请输入6位密码！", ResultVO.class);
+        }
+
+        UseUpdateInParam useUpdateInParam = new UseUpdateInParam();
+        useUpdateInParam.setIdWhere(idWhere);
+        useUpdateInParam.setPassword(password);
+        int updateCount = useService.updatePassWordById(useUpdateInParam);
+        if (updateCount > 0)
+            return ResultStruct.success(updateCount);
+        else
+            return ResultStruct.error("修改失败", ResultVO.class);
+    }
+
+    /**
+     * 根据GUID，得到用户ID，方法ID：SE20190924122622552
+     *
+     * @param guid 表sys_forgetPassWordMail,字段名guid:guid
+     * @return UseID
+     */
+    @ApiOperation(value = "根据GUID，得到用户ID", notes = "UseID")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "guid", value = "guid", dataType = "String", required = true)
+    })
+    @PostMapping("/getUseIdByGuid")
+    public ResultVO getUseIdByGuid(@RequestParam(value = "guid") String guid) {
+        guid = guid == null ? guid : guid.trim();
+        String useIdByGuid = useService.getUseIdByGuid(guid);
+        if (useIdByGuid == null) {
+            return ResultStruct.error("密码修改申请记录超时，请重复发启“忘记密码”流程！", ResultVO.class);
+        }
+        return ResultStruct.success(useIdByGuid);
+    }
+
+    /**
+     * 增加忘记密码申请，方法ID：SE20190924123537355
+     *
+     * @param useId 用户ID
+     * @return 是否已增加
+     */
+    @ApiOperation(value = "增加忘记密码申请", notes = "是否已增加")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "useId", value = "用户ID", dataType = "String", required = true)
+    })
+    @PostMapping("/insertForGetPassWordRecord")
+    public ResultVO insertForGetPassWordRecord(@RequestParam(value = "useId") String useId) {
+        useId = useId == null ? useId : useId.trim();
+        if (useId == null) {
+            return ResultStruct.error("用户ID，不能为空！", ResultVO.class);
+        }
+        String id = LhClass.getMainDataLineKey(Short.valueOf(this.port));
+        String guid = UUID.randomUUID().toString().replace("-", "");
+
+        Long time = System.currentTimeMillis();
+        time += 1000 * 3600 * 24;//在当前系统时间的基础上往后增加24小时
+        Date endDate = new Date(time);
+
+        UseInsertForGet useInsertForGet = new UseInsertForGet();
+        useInsertForGet.setId(id);
+        useInsertForGet.setUseId(useId);
+        useInsertForGet.setEndDate(endDate);
+        useInsertForGet.setGuid(guid);
+
+        UseDeletePassWordInParam useDeletePassWordInParam = new UseDeletePassWordInParam();
+        useDeletePassWordInParam.setUseId(useId);
+        int deletePassWordRecordByUseId = useService.deletePassWordRecordByUseId(useDeletePassWordInParam);
+        int resultCount = useService.insertForGetPassWordRecord(useInsertForGet);
+        if (resultCount > 0)
+            return ResultStruct.success(resultCount + deletePassWordRecordByUseId);
+        else
+            return ResultStruct.error("增加失败", ResultVO.class);
     }
 }

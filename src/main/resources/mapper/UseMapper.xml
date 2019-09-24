@@ -113,5 +113,185 @@
             AND mobile = #{mobile,jdbcType=VARCHAR}
         </where>
     </select>
+    <!-- 注释：根据标识得到内容 -->
+    <select id="getMobileAndMailBy" resultType="com.lh.authority.model.UseMobileAndMailModel" parameterType="com.lh.authority.model.InPutParam.UseSelectMobileAndMailInParam">
+        SELECT
+        id
+        ,username
+        ,mobile
+        ,email
+        ,stopSign
+        FROM  sys_userinfo
+        <where>
+            <if test="username != null">
+                AND username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="mobile != null">
+                AND mobile = #{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                AND email = #{email,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <!-- 注释：修改密码 -->
+    <update id="updatePassWordById" parameterType="com.lh.authority.model.InPutParam.UseUpdateInParam">
+        UPDATE sys_userinfo
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="deptId != null">
+                deptId = #{deptId,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="englishName != null">
+                englishName = #{englishName,jdbcType=VARCHAR},
+            </if>
+            <if test="portrait != null">
+                portrait = #{portrait,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null">
+                qq = #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="postCode != null">
+                postCode = #{postCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                userType = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="systemName != null">
+                systemName = #{systemName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stopSign != null">
+                stopSign = #{stopSign,jdbcType=BIT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <where>
+            <if test="idWhere != null">
+                AND id = #{idWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="deptIdWhere != null">
+                AND deptId = #{deptIdWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="usernameWhere != null">
+                AND username = #{usernameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="passwordWhere != null">
+                AND password = #{passwordWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="nameWhere != null">
+                AND name = #{nameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="englishNameWhere != null">
+                AND englishName = #{englishNameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="portraitWhere != null">
+                AND portrait = #{portraitWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileWhere != null">
+                AND mobile = #{mobileWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="telWhere != null">
+                AND tel = #{telWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="qqWhere != null">
+                AND qq = #{qqWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="emailWhere != null">
+                AND email = #{emailWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="addressWhere != null">
+                AND address = #{addressWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="postCodeWhere != null">
+                AND postCode = #{postCodeWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="userTypeWhere != null">
+                AND userType = #{userTypeWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="systemNameWhere != null">
+                AND systemName = #{systemNameWhere,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeWhere != null">
+                AND createTime = #{createTimeWhere,jdbcType=TIMESTAMP}
+            </if>
+            <if test="stopSignWhere != null">
+                AND stopSign = #{stopSignWhere,jdbcType=BIT}
+            </if>
+            <if test="remarkWhere != null">
+                AND remark = #{remarkWhere,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </update>
+    <!-- 注释：根据GUID，得到用户ID -->
+    <select id="getUseIdByGuid" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+        useId
+        FROM  sys_forgetPassWordMail
+        <where>
+            <![CDATA[AND endDate <= 'now()']]>
+            AND guid = #{guid,jdbcType=VARCHAR}
+        </where>
+    </select>
+    <!-- 注释：增加忘记密码申请 -->
+    <insert id="insertForGetPassWordRecord" parameterType="com.lh.authority.model.InPutParam.UseInsertForGet">
+        INSERT INTO sys_forgetPassWordMail (
+               id
+                ,useId
+                ,endDate
+                ,guid
+        )
+        VALUES (
+               #{id,jdbcType=VARCHAR}
+                ,#{useId,jdbcType=VARCHAR}
+                ,#{endDate,jdbcType=TIMESTAMP}
+                ,#{guid,jdbcType=VARCHAR}
+        )
+    </insert>
+    <!-- 注释：根据UseId，删除忘记密码记录 -->
+    <delete id="deletePassWordRecordByUseId" parameterType="com.lh.authority.model.InPutParam.UseDeletePassWordInParam">
+        DELETE FROM sys_forgetPassWordMail
+        <where>
+            <if test="id != null">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="useId != null">
+                AND useId = #{useId,jdbcType=VARCHAR}
+            </if>
+            <if test="endDate != null">
+                AND endDate = #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="guid != null">
+                AND guid = #{guid,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
 
 </mapper>

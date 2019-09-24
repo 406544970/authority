@@ -43,7 +43,6 @@ public class MyAuthorityController {
     public ResultVO selectMySystemNameList(@RequestParam(value = "id") String id) {
         MySystemPara mySystemPara = new MySystemPara();
         mySystemPara.setId(id);
-//        List<MySystem> mySystems = ;
         return ResultStruct.success(systemService.selectMySystemNameList(mySystemPara));
     }
 
