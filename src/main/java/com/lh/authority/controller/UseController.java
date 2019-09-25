@@ -16,7 +16,6 @@ import lh.model.ResultVOPage;
 import lh.toolclass.LhClass;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +41,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/useController")
 @Api(value = "测试代码生成器", description = "代码生成器描述")
-public class UseController extends GetPropertiesClass{
+public class UseController {
+    @Autowired
+    GetPropertiesClass getPropertiesClass;
+
     @Autowired
     UseService useService;
 
@@ -139,7 +141,7 @@ public class UseController extends GetPropertiesClass{
         remark = remark == null ? remark : remark.trim();
 
         UseInsertInParam useInsertInParam = new UseInsertInParam();
-        String mainKey = LhClass.getOrderMainLenKey(Short.valueOf(super.getPort()));//这里引用架包中的生成主键方法
+        String mainKey = LhClass.getOrderMainLenKey(Short.valueOf(getPropertiesClass.getPort()));//这里引用架包中的生成主键方法
         useInsertInParam.setId(mainKey);
         useInsertInParam.setDeptId(deptId);
         useInsertInParam.setUsername(username);
@@ -370,7 +372,7 @@ public class UseController extends GetPropertiesClass{
         if (useId == null) {
             return ResultStruct.error("用户ID，不能为空！", ResultVO.class);
         }
-        String id = LhClass.getMainDataLineKey(Short.valueOf(this.port));
+        String id = LhClass.getMainDataLineKey(Short.valueOf(getPropertiesClass.getPort()));
         String guid = UUID.randomUUID().toString().replace("-", "");
 
         Long time = System.currentTimeMillis();

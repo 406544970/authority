@@ -4,8 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +24,9 @@ import static com.netflix.discovery.DiscoveryManager.getInstance;
 @EnableEurekaClient
 @RequestMapping("/universal")     // 通过这里配置使下面的映射都在/users下，可去除
 @Api(value = "通用控制层", description = "专用于梁昊所要求的通用方法")
-@RefreshScope
-public class UniversalController extends GetPropertiesClass{
+public class UniversalController {
+    @Autowired
+    GetPropertiesClass getPropertiesClass;
 
     @ApiOperation(value = "测试Feign熔断时间", notes = "hi")
     @ApiImplicitParams({
@@ -48,7 +48,7 @@ public class UniversalController extends GetPropertiesClass{
     @ApiOperation(value = "得到当前版本号", notes = "返回：当前版本号")
     @PostMapping("/myVersion")
     public String getVersion() {
-        return String.format("My port is : %s; My version is : %s", super.getPort(), super.getVersion());
+        return String.format("My port is : %s; My version is : %s", getPropertiesClass.getPort(), getPropertiesClass.getVersion());
     }
 
     /**
@@ -57,7 +57,7 @@ public class UniversalController extends GetPropertiesClass{
     @ApiOperation(value = "得到当前端口号", notes = "返回：当前端口号")
     @PostMapping("/myPort")
     public String myPort() {
-        return String.format("I am is port:%s", super.getPort());
+        return String.format("I am is port:%s", getPropertiesClass.getPort());
     }
 
     /**
@@ -67,7 +67,7 @@ public class UniversalController extends GetPropertiesClass{
     @GetMapping("/downLine")
     public String downLine() {
         getInstance().shutdownComponent();
-        return String.format("ApplicationName\"%s\"(Port:%s) is downLine.",super.getApplicationName(), super.getPort());
+        return String.format("ApplicationName\"%s\"(Port:%s) is downLine.", getPropertiesClass.getApplicationName(), getPropertiesClass.getPort());
     }
 
     /**
@@ -76,6 +76,6 @@ public class UniversalController extends GetPropertiesClass{
     @ApiOperation(value = "得到参数标识", notes = "返回：参数标识")
     @PostMapping("/GetParamSign")
     public String GetParamSign() {
-        return String.format("liangHaoSign:\"%s\"", super.getLiangHaoSign());
+        return String.format("liangHaoSign:\"%s\"", getPropertiesClass.getLiangHaoSign());
     }
 }

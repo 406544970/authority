@@ -1,6 +1,8 @@
 package com.lh.authority.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Service;
 
 /**
  * 得到参数
@@ -9,7 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
  * @function
  * @editLog
  */
-public abstract class GetPropertiesClass {
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+@Service
+@RefreshScope
+public class GetPropertiesClass {
     @Value("${server.port}")
     private String port;
     @Value("${eureka.instance.metadata-map.version}")
@@ -23,7 +28,7 @@ public abstract class GetPropertiesClass {
      * 得到端口号
      * @return
      */
-    protected String getPort(){
+    public String getPort(){
         return this.port;
     }
 
@@ -31,7 +36,7 @@ public abstract class GetPropertiesClass {
      * 得到版本
      * @return
      */
-    protected String getVersion(){
+    public String getVersion(){
         return this.version;
     }
 
@@ -39,7 +44,7 @@ public abstract class GetPropertiesClass {
      * 得到微服务名称
      * @return
      */
-    protected String getApplicationName(){
+    public String getApplicationName(){
         return this.springApplicationName;
     }
 
@@ -47,7 +52,7 @@ public abstract class GetPropertiesClass {
      * 自定义测试标识
      * @return
      */
-    protected String getLiangHaoSign(){
+    public String getLiangHaoSign(){
         return this.liangHaoSign;
     }
 }
