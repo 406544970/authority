@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lh.model.ResultVO;
 import lh.toolclass.LhClass;
-import lh.toolclass.LhGetPinyYinClass;
+import lh.toolclass.LhGetPinYinClass;
 import lh.units.ResultStruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -197,7 +197,7 @@ public class ZoneController extends GetPropertiesClass{
                     .replace("）", "")
                     .replace(")", "")
                     .replace("(", "");
-            return LhGetPinyYinClass.getPingYin(text);
+            return LhGetPinYinClass.getPinYin(text);
         } else
             return null;
     }
