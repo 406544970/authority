@@ -1,5 +1,6 @@
 package com.lh.authority.controller;
 
+import com.lh.authority.unit.GetPropertiesClass;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

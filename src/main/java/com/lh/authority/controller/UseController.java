@@ -7,6 +7,7 @@ import com.lh.authority.model.InPutParam.*;
 import com.lh.authority.model.UseMobileAndMailModel;
 import com.lh.authority.model.UseModel;
 import com.lh.authority.service.UseService;
+import com.lh.authority.unit.GetPropertiesClass;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

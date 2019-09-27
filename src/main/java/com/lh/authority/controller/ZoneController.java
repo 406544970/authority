@@ -10,6 +10,7 @@ import com.lh.authority.model.InPutParam.ZoneListInPutParam;
 import com.lh.authority.model.InPutParam.ZoneUpdateInParam;
 import com.lh.authority.model.*;
 import com.lh.authority.service.ZoneService;
+import com.lh.authority.unit.GetPropertiesClass;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -41,11 +42,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Api(value = "地区", description = "地区")
-public class ZoneController extends GetPropertiesClass{
+public class ZoneController {
     @Autowired
     ZoneService zoneService;
     @Autowired
     Gson gson;
+    @Autowired
+    GetPropertiesClass getPropertiesClass;
 
 
     /**
@@ -246,7 +249,7 @@ public class ZoneController extends GetPropertiesClass{
         paraId = paraId == null ? paraId : paraId.trim();
 
         ZoneInsertInParam zoneInsertInParam = new ZoneInsertInParam();
-        String mainKey = LhClass.getMainDataLineKey(Short.valueOf(super.getPort()));
+        String mainKey = LhClass.getMainDataLineKey(Short.valueOf(getPropertiesClass.getPort()));
         zoneInsertInParam.setId(mainKey);
         zoneInsertInParam.setLabel(label);
         zoneInsertInParam.setPinYin(getpinYinMy(label));
