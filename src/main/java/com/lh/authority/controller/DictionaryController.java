@@ -146,9 +146,13 @@ public class DictionaryController {
             , @RequestParam(value = "sortNo", required = false) int sortNo
             , @RequestParam(value = "stopSign", required = false) boolean stopSign
             , @RequestParam(value = "remark", required = false) String remark) {
-        id = id == null ? id : id.trim();
-        idWhere = idWhere == null ? idWhere : idWhere.trim();
-        signNameWhere = signNameWhere == null ? signNameWhere : signNameWhere.trim();
+        if (id != null)
+            id = id.trim();
+        if (idWhere != null)
+            idWhere = idWhere.trim();
+        if (signNameWhere != null)
+            signNameWhere = signNameWhere.trim();
+
         String contentName = id;
         remark = remark == null ? remark : remark.trim();
 
