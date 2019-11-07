@@ -152,10 +152,10 @@ public class DictionaryController {
             idWhere = idWhere.trim();
         if (signNameWhere != null)
             signNameWhere = signNameWhere.trim();
+        if (remark != null)
+            remark = remark.trim();
 
         String contentName = id;
-        remark = remark == null ? remark : remark.trim();
-
         DictionaryUpdateInParam dictionaryUpdateInParam = new DictionaryUpdateInParam();
         dictionaryUpdateInParam.setId(id);
         dictionaryUpdateInParam.setIdWhere(idWhere);
